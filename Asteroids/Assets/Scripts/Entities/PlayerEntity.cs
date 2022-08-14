@@ -1,6 +1,9 @@
 using System;
+using Combat;
 using Data.Player;
 using Entities.Core;
+using Interaction;
+using Interaction.Weapon;
 using UnityEngine;
 using Utilities.Input;
 
@@ -11,7 +14,7 @@ namespace Entities
     public class PlayerEntity : ShipEntity
     {
         [field: SerializeField] public PlayerData PlayerData { get; private set; }
-        
+
         private PlayerInput _playerInput;
         private Rigidbody2D _rigidbody2D;
         
@@ -35,7 +38,7 @@ namespace Entities
             ReadMovement();
             Rotate();
 
-            if (_playerInput.InputActions.PlayerActions.Fire.WasPressedThisFrame())
+            if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
                 Shoot();
             }
@@ -77,10 +80,16 @@ namespace Entities
 
         private void Shoot()
         {
-            var bullet = Instantiate(CombatData.BulletPrefab, transform.position, transform.rotation);
-            bullet.Fire(transform.up);
+            if(AttackMaker.CanMakeFire())
+                AttackMaker.Fire(transform);
         }
-        
-        
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.transform.TryGetComponent(out PickableObject pickableObject))
+            {
+                ObjectPicker.PickupObject(pickableObject);
+            }
+        }
     }
 }

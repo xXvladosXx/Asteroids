@@ -1,5 +1,7 @@
 using System;
 using Combat;
+using Combat.Projectiles;
+using Combat.Projectiles.Core;
 using Data.Asteroid;
 using Entities.Core;
 using UnityEngine;
@@ -9,7 +11,7 @@ namespace Entities
 {
     [RequireComponent(typeof(Rigidbody2D),
         typeof(SpriteRenderer))]
-    public class AsteroidEntity : AliveEntity
+    public class AsteroidEntity : Entity
     {
         [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
         [field: SerializeField] public float Size { get; set; } 
@@ -27,7 +29,23 @@ namespace Entities
 
         public override void Die()
         {
+            if (Size > AsteroidData.SizeToSplit)
+            {
+                CreateSplit();
+                CreateSplit();
+            }
+            
             Destroy(gameObject);
+        }
+
+        private void CreateSplit()
+        {
+            Vector2 position = transform.position;
+            position += Random.insideUnitCircle * .5f;
+            
+            var half = Instantiate(this, position, transform.rotation);
+            half.Size = Size * .5f;
+            half.SetDirection(Random.insideUnitCircle.normalized * RandomizeSpeed());
         }
 
         private void Start()
@@ -42,10 +60,15 @@ namespace Entities
 
         public void SetDirection(Vector3 direction)
         {
-            var possibleSpeed = Random.Range(AsteroidData.MinSpeed, AsteroidData.MaxSpeed);
-            _rigidbody.AddForce(direction * possibleSpeed);
+            _rigidbody.AddForce(direction * RandomizeSpeed());
             
             Destroy(gameObject, AsteroidData.Lifetime);
+        }
+
+        private float RandomizeSpeed()
+        {
+            var possibleSpeed = Random.Range(AsteroidData.MinSpeed, AsteroidData.MaxSpeed);
+            return possibleSpeed;
         }
 
         private void OnCollisionEnter2D(Collision2D col)
@@ -53,11 +76,6 @@ namespace Entities
             if (col.transform.TryGetComponent(out PlayerEntity playerEntity))
             {
                 playerEntity.Die();
-                Die();
-            }
-
-            if (col.transform.TryGetComponent(out Bullet bullet))
-            {
                 Die();
             }
         }

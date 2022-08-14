@@ -1,10 +1,22 @@
-﻿using Data.Combat;
+﻿using Combat;
+using Interaction;
 using UnityEngine;
 
 namespace Entities.Core
 {
-    public abstract class ShipEntity : AliveEntity
+    [RequireComponent(typeof(AttackMaker))]
+    public abstract class ShipEntity : Entity
     {
-        [field: SerializeField] public CombatData CombatData { get; private set; }
+        [field: SerializeField] public ObjectPicker ObjectPicker { get; private set; }
+
+        protected AttackMaker AttackMaker;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            AttackMaker = GetComponent<AttackMaker>();
+            AttackMaker.Init(ObjectPicker);
+        }
     }
 }

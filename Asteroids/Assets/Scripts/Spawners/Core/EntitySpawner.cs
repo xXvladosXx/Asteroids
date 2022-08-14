@@ -4,17 +4,8 @@ using Utilities.Extensions;
 
 namespace Spawners.Core
 {
-    public abstract class EntitySpawner : MonoBehaviour
+    public abstract class EntitySpawner : Spawner
     {
-        [field: SerializeField] public AliveEntity EntityToSpawn { get; private set; }
-        [field: SerializeField] public int SpawnAmount { get; private set; }
-        [field: SerializeField] public float SpawnRate { get; private set; }
-
-        private void Start()
-        {
-            this.CallWithRepeat(Spawn, SpawnRate);
-        }
-
-        public abstract void Spawn();
+        [field: SerializeField] public Entity EntityToSpawn { get; private set; }
     }
 }
