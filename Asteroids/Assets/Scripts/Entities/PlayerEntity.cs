@@ -27,26 +27,33 @@ namespace Entities
 
         private void Update()
         {
-            _moving = _playerInput.InputActions.PlayerActions.Movement.ReadValue<Vector2>().y > 0;
-            
-            print(_moving);
+            ReadMovement();
+            Rotate();
 
+            if (_playerInput.InputActions.PlayerActions.Fire.WasPressedThisFrame())
+            {
+                Shoot();
+            }
+        }
+
+        private void ReadMovement()
+        {
+            _moving = _playerInput.InputActions.PlayerActions.Movement.ReadValue<Vector2>().y > 0;
+        }
+
+        private void Rotate()
+        {
             if (_playerInput.InputActions.PlayerActions.Movement.ReadValue<Vector2>().x > 0)
             {
                 _movementDirection = -1;
             }
-            else if(_playerInput.InputActions.PlayerActions.Movement.ReadValue<Vector2>().x < 0)
+            else if (_playerInput.InputActions.PlayerActions.Movement.ReadValue<Vector2>().x < 0)
             {
                 _movementDirection = 1;
             }
             else
             {
                 _movementDirection = 0;
-            }
-
-            if (_playerInput.InputActions.PlayerActions.Fire.WasPressedThisFrame())
-            {
-                Shoot();
             }
         }
 
