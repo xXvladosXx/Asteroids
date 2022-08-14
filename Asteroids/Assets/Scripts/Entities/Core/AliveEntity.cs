@@ -9,5 +9,7 @@ namespace Entities.Core
         {
             
         }
+
+        public abstract void Die();
     }
 }

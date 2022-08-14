@@ -25,6 +25,11 @@ namespace Entities
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
+        public override void Die()
+        {
+            Destroy(gameObject);    
+        }
+        
         private void Update()
         {
             ReadMovement();
@@ -75,5 +80,7 @@ namespace Entities
             var bullet = Instantiate(CombatData.BulletPrefab, transform.position, transform.rotation);
             bullet.Fire(transform.up);
         }
+        
+        
     }
 }

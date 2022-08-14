@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Data.Combat
 {
     [Serializable]
-    public class CombatData
+    public sealed class CombatData
     {
         [field: SerializeField] public global::Combat.Bullet BulletPrefab { get; private set; }
     }

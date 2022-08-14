@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entities.Core
 {
-    public class ShipEntity : AliveEntity
+    public abstract class ShipEntity : AliveEntity
     {
         [field: SerializeField] public CombatData CombatData { get; private set; }
     }

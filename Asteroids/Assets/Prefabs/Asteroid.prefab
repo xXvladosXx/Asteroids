@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6960040021729653440}
   - component: {fileID: 5539766041552179305}
   - component: {fileID: 9011360319815172516}
-  m_Layer: 0
+  - component: {fileID: 135595536393515953}
+  m_Layer: 7
   m_Name: Asteroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,3 +134,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &135595536393515953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577072620255922613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a0dec392a8b03a4bbbbdd1a35677313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AsteroidData>k__BackingField:
+    <PossibleSprites>k__BackingField:
+    - {fileID: 21300000, guid: a44af304548cb7b4aadb97582f60d728, type: 3}
+    - {fileID: 21300000, guid: f254e398beb012142a24633fa2b82def, type: 3}
+    - {fileID: 21300000, guid: 06ebc3b6f7d199745ac6895e9d0f2e09, type: 3}
+    - {fileID: 21300000, guid: 9a04f6cfae75c064997fb1ddf1827c86, type: 3}
+    <MaxSize>k__BackingField: 1
+    <MinSize>k__BackingField: 0.5
+    <MinSpeed>k__BackingField: 10
+    <MaxSpeed>k__BackingField: 20
+    <Lifetime>k__BackingField: 10
+  <Size>k__BackingField: 0

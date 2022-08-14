@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Utilities.Input
 {
-    public class PlayerInput : MonoBehaviour
+    public sealed class PlayerInput : MonoBehaviour
     {
         public InputActions InputActions { get; private set; }
         private InputActions.PlayerActionsActions PlayerActions { get; set; }
