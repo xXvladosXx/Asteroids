@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ProjectileData>k__BackingField:
-    <ProjectileSpeed>k__BackingField: 800
+    <ProjectileSpeed>k__BackingField: 1000
     <MaxLifeTime>k__BackingField: 8
-    <TimeBetweenShooting>k__BackingField: 0.01
+    <TimeBetweenShooting>k__BackingField: 0.05
   <ProjectileModifiersOnStart>k__BackingField: []
   <ProjectileModifiersOnDestroy>k__BackingField: []

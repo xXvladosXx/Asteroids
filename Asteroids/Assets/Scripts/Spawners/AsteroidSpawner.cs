@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Score;
 using Entities;
 using Spawners.Core;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Spawners
     {
         [field: SerializeField] public float SpawnDistance { get; private set; } = 10;
         [field: SerializeField] public float DirectionVariance { get; private set; } = 10;
+
+        public event Action<float> OnScoreAdded;
         public override void Spawn()
         {
             for (int i = 0; i < SpawnAmount; i++)
@@ -20,11 +23,25 @@ namespace Spawners
 
                 float variance = Random.Range(-DirectionVariance, DirectionVariance); 
                 Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
+
+                var asteroid = AsteroidPool.Instance.GetPrefab();
+                asteroid.transform.position = spawnPoint;
+                asteroid.transform.rotation = rotation;
                 
-                var asteroid = Instantiate(EntityToSpawn, spawnPoint, rotation) as AsteroidEntity;
                 asteroid.Size = Random.Range(asteroid.AsteroidData.MinSize, asteroid.AsteroidData.MaxSize);
                 asteroid.SetDirection(rotation * -spawnDirection);
+
+                asteroid.OnAsteroidDestroyed += OnAsteroidDestroyed;
             } 
+        }
+
+        private void OnAsteroidDestroyed(AsteroidEntity asteroidEntity)
+        {
+            asteroidEntity.OnAsteroidDestroyed -= OnAsteroidDestroyed;
+            
+            AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
+
+            OnScoreAdded?.Invoke(asteroidEntity.Size);
         }
     }
 }

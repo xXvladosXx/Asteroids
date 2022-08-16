@@ -20,6 +20,8 @@ namespace Entities
         
         private bool _moving;
         private float _movementDirection;
+
+        public event Action OnDied;
         protected override void Awake()
         {
             base.Awake();
@@ -30,7 +32,8 @@ namespace Entities
 
         public override void Die()
         {
-            Destroy(gameObject);    
+            Destroy(gameObject);   
+            OnDied?.Invoke();
         }
         
         private void Update()

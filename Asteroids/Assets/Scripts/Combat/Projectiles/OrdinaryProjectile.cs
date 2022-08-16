@@ -1,6 +1,7 @@
 ﻿using Combat.Projectiles.Core;
 using Data.Bullet;
 using UnityEngine;
+using Utilities.Extensions;
 
 namespace Combat.Projectiles
 {
@@ -11,13 +12,18 @@ namespace Combat.Projectiles
             base.Fire(direction);
             Rigidbody2D.AddForce(direction * ProjectileData.ProjectileSpeed);
             
-            Destroy(gameObject, ProjectileData.MaxLifeTime);
+            this.CallWithDelay(ReleaseProjectile, ProjectileData.MaxLifeTime);
         }
         
         protected override void OnCollisionEnter2D(Collision2D col)
         {
             base.OnCollisionEnter2D(col);
-            Destroy(gameObject);
+            ReleaseProjectile();
+        }
+        
+        private void ReleaseProjectile()
+        {
+            ProjectilePool.Instance.ReleasePrefab(this);
         }
     }
 }

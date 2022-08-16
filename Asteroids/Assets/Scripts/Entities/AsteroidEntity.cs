@@ -4,7 +4,9 @@ using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Data.Asteroid;
 using Entities.Core;
+using Spawners.Core;
 using UnityEngine;
+using Utilities.Extensions;
 using Random = UnityEngine.Random;
 
 namespace Entities
@@ -19,6 +21,7 @@ namespace Entities
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rigidbody;
 
+        public event Action<AsteroidEntity> OnAsteroidDestroyed;
         protected override void Awake()
         {
             base.Awake();
@@ -34,15 +37,21 @@ namespace Entities
                 CreateSplit();
                 CreateSplit();
             }
+
+            if (OnAsteroidDestroyed == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             
-            Destroy(gameObject);
+            OnAsteroidDestroyed?.Invoke(this);
         }
 
         private void CreateSplit()
         {
             Vector2 position = transform.position;
             position += Random.insideUnitCircle * .5f;
-            
+
             var half = Instantiate(this, position, transform.rotation);
             half.Size = Size * .5f;
             half.SetDirection(Random.insideUnitCircle.normalized * RandomizeSpeed());
@@ -62,7 +71,12 @@ namespace Entities
         {
             _rigidbody.AddForce(direction * RandomizeSpeed());
             
-            Destroy(gameObject, AsteroidData.Lifetime);
+            this.CallWithDelay(ReleaseAsteroid, AsteroidData.Lifetime);
+        }
+
+        private void ReleaseAsteroid()
+        {
+            AsteroidPool.Instance.ReleasePrefab(this);
         }
 
         private float RandomizeSpeed()

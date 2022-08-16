@@ -8,7 +8,9 @@ namespace Spawners.Core
         [field: SerializeField] public int SpawnAmount { get; private set; }
         [field: SerializeField] public float SpawnRate { get; private set; }
 
-        protected virtual void Awake() { }
+        protected virtual void Awake()
+        {
+        }
         private void Start()
         {
             this.CallWithRepeat(Spawn, SpawnRate);

@@ -1,4 +1,5 @@
-﻿using Interaction;
+﻿using Combat.Projectiles.Core;
+using Interaction;
 using UnityEngine;
 using Utilities.Extensions;
 
@@ -19,8 +20,9 @@ namespace Combat
         public void Fire(Transform transform)
         {
             _readyToAttack = false;
-            
-            var bullet = Instantiate(_objectPicker.CurrentProjectile, transform.position, transform.rotation);
+            var bullet = ProjectilePool.Instance.GetPrefab();
+            bullet.transform.position = transform.position;
+            bullet.transform.rotation = transform.rotation;
             bullet.Fire(transform.up);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);
