@@ -1,15 +1,20 @@
 using System;
 using Combat;
+using Combat.Projectiles;
+using Combat.Projectiles.Core;
 using Data.Asteroid;
 using Entities.Core;
+using ObjectPoolers;
+using Spawners.Core;
 using UnityEngine;
+using Utilities.Extensions;
 using Random = UnityEngine.Random;
 
 namespace Entities
 {
     [RequireComponent(typeof(Rigidbody2D),
         typeof(SpriteRenderer))]
-    public class AsteroidEntity : AliveEntity
+    public class AsteroidEntity : Entity
     {
         [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
         [field: SerializeField] public float Size { get; set; } 
@@ -17,6 +22,8 @@ namespace Entities
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rigidbody;
 
+        public event Action<AsteroidEntity> OnAsteroidDestroyed;
+        public event Action<AsteroidEntity> OnAsteroidReleased;
         protected override void Awake()
         {
             base.Awake();
@@ -27,7 +34,34 @@ namespace Entities
 
         public override void Die()
         {
-            Destroy(gameObject);
+            var explosion = ExplosionPool.Instance.GetPrefab();
+            explosion.transform.position = transform.position;
+            explosion.Play();
+            this.CallWithDelay((() => ExplosionPool.Instance.ReleasePrefab(explosion)), 1f);
+            
+            if (Size > AsteroidData.SizeToSplit)
+            {
+                CreateSplit();
+                CreateSplit();
+            }
+
+            if (OnAsteroidDestroyed == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
+            OnAsteroidDestroyed?.Invoke(this);
+        }
+
+        private void CreateSplit()
+        {
+            Vector2 position = transform.position;
+            position += Random.insideUnitCircle * .5f;
+
+            var half = Instantiate(this, position, transform.rotation);
+            half.Size = Size * .5f;
+            half.SetDirection(Random.insideUnitCircle.normalized * RandomizeSpeed());
         }
 
         private void Start()
@@ -42,10 +76,20 @@ namespace Entities
 
         public void SetDirection(Vector3 direction)
         {
-            var possibleSpeed = Random.Range(AsteroidData.MinSpeed, AsteroidData.MaxSpeed);
-            _rigidbody.AddForce(direction * possibleSpeed);
+            _rigidbody.AddForce(direction * RandomizeSpeed());
             
-            Destroy(gameObject, AsteroidData.Lifetime);
+            this.CallWithDelay(ReleaseAsteroid, AsteroidData.Lifetime);
+        }
+
+        private void ReleaseAsteroid()
+        {
+            OnAsteroidReleased?.Invoke(this);
+        }
+
+        private float RandomizeSpeed()
+        {
+            var possibleSpeed = Random.Range(AsteroidData.MinSpeed, AsteroidData.MaxSpeed);
+            return possibleSpeed;
         }
 
         private void OnCollisionEnter2D(Collision2D col)
@@ -53,11 +97,6 @@ namespace Entities
             if (col.transform.TryGetComponent(out PlayerEntity playerEntity))
             {
                 playerEntity.Die();
-                Die();
-            }
-
-            if (col.transform.TryGetComponent(out Bullet bullet))
-            {
                 Die();
             }
         }

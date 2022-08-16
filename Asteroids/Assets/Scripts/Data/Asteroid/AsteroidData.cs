@@ -7,7 +7,7 @@ namespace Data.Asteroid
     public sealed class AsteroidData 
     {
         [field: SerializeField] public Sprite[] PossibleSprites { get; private set; }
-
+        [field: SerializeField] public float SizeToSplit { get; private set; } 
         [field: SerializeField] public float MaxSize { get; private set; } 
         [field: SerializeField] public float MinSize { get; private set; } 
         [field: SerializeField] public float MinSpeed { get; private set; } 

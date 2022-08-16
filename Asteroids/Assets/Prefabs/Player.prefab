@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 307852637447588280}
   - component: {fileID: 307852637447588283}
   - component: {fileID: 307852637447588260}
+  - component: {fileID: 9183643171735864551}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -147,8 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf57338ee1dd18489f67da51da6604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CombatData>k__BackingField:
-    <BulletPrefab>k__BackingField: {fileID: -2599546545302430648, guid: 48431835390b025418d9baf690f7bae3, type: 3}
+  <ObjectPicker>k__BackingField:
+    <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
+    <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
   <PlayerData>k__BackingField:
     <MovementSpeed>k__BackingField: 2
     <RotationSpeed>k__BackingField: 1
@@ -164,3 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b368fecfb37d4a7cb97b3a1ae7b82ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9183643171735864551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307852637447588282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f34959d5c146dabee0f366db851d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _misslePrefab: {fileID: 19800002, guid: 565cdc2ed7b030a41accd8f00ae59a50, type: 3}
