@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    public class GameContext
+    public sealed class GameContext
     {
         public event Action OnReloadRequire;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Data.Bullet
+namespace Data.Projectile
 {
     [Serializable]
     public sealed class ProjectileData

@@ -1,6 +1,7 @@
 ﻿using System;
 using Data.Score;
 using Entities;
+using ObjectPoolers;
 using Spawners.Core;
 using UnityEngine;
 using Zenject.Asteroids;
@@ -32,7 +33,15 @@ namespace Spawners
                 asteroid.SetDirection(rotation * -spawnDirection);
 
                 asteroid.OnAsteroidDestroyed += OnAsteroidDestroyed;
+                asteroid.OnAsteroidReleased += OnAsteroidReleased;
             } 
+        }
+
+        private void OnAsteroidReleased(AsteroidEntity asteroidEntity)
+        {
+            asteroidEntity.OnAsteroidReleased -= OnAsteroidReleased;
+            
+            AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
         }
 
         private void OnAsteroidDestroyed(AsteroidEntity asteroidEntity)

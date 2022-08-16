@@ -1,5 +1,5 @@
 ﻿using Combat.Projectiles.Core;
-using Data.Bullet;
+using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
 

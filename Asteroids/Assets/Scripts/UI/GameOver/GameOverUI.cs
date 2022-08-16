@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI.GameOver
 {
-    public class GameOverUI : PopupUIElement
+    public sealed class GameOverUI : PopupUIElement
     {
         [SerializeField] private Button _button;
 

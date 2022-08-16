@@ -1,11 +1,10 @@
-﻿using Combat.Projectiles.Core;
-using Entities;
+﻿using Entities;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Spawners.Core
+namespace ObjectPoolers
 {
-    public class AsteroidPool : MonoBehaviour
+    public sealed class AsteroidPool : MonoBehaviour
     {
         public static AsteroidPool Instance { get; private set; }
         
@@ -23,18 +22,18 @@ namespace Spawners.Core
             {
                 Destroy(gameObject);
             }
-            
-            _pool = new ObjectPool<AsteroidEntity>(() => 
-                Instantiate(_asteroidEntity, gameObject.transform), prefab =>
-            {
-                prefab.gameObject.SetActive(true);
-            }, prefab =>
-            {
-                prefab.gameObject.SetActive(false);
-            }, prefab =>
-            {
-                Destroy(prefab.gameObject);
-            }, false, 100,200);
+
+            MakePool();
+        }
+
+        private void MakePool()
+        {
+            _pool = new ObjectPool<AsteroidEntity>(() =>
+                    Instantiate(_asteroidEntity, gameObject.transform),
+                prefab => { prefab.gameObject.SetActive(true); },
+                prefab => { prefab.gameObject.SetActive(false); }, 
+                prefab => { Destroy(prefab.gameObject); }, 
+                false, 100, 200);
         }
 
         public AsteroidEntity GetPrefab() => _pool.Get();

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Core
 {
     [Serializable]
-    public class ScoreCounter
+    public sealed class ScoreCounter
     {
         [field: SerializeField] public ScoreData ScoreData { get; private set; }
         public int Score { get; private set; }

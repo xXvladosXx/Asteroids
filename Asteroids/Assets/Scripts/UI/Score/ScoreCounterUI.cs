@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UI.Score
 {
-    public class ScoreCounterUI : StaticUIElement
+    public sealed class ScoreCounterUI : StaticUIElement
     {
         [SerializeField] private TextMeshProUGUI _score;
 

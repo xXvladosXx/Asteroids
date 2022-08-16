@@ -1,6 +1,6 @@
 using System;
 using Combat.Projectiles.Modifiers;
-using Data.Bullet;
+using Data.Projectile;
 using Entities;
 using UnityEngine;
 

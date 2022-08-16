@@ -4,6 +4,7 @@ using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Data.Asteroid;
 using Entities.Core;
+using ObjectPoolers;
 using Spawners.Core;
 using UnityEngine;
 using Utilities.Extensions;
@@ -22,6 +23,7 @@ namespace Entities
         private Rigidbody2D _rigidbody;
 
         public event Action<AsteroidEntity> OnAsteroidDestroyed;
+        public event Action<AsteroidEntity> OnAsteroidReleased;
         protected override void Awake()
         {
             base.Awake();
@@ -32,6 +34,11 @@ namespace Entities
 
         public override void Die()
         {
+            var explosion = ExplosionPool.Instance.GetPrefab();
+            explosion.transform.position = transform.position;
+            explosion.Play();
+            this.CallWithDelay((() => ExplosionPool.Instance.ReleasePrefab(explosion)), 1f);
+            
             if (Size > AsteroidData.SizeToSplit)
             {
                 CreateSplit();
@@ -76,7 +83,7 @@ namespace Entities
 
         private void ReleaseAsteroid()
         {
-            AsteroidPool.Instance.ReleasePrefab(this);
+            OnAsteroidReleased?.Invoke(this);
         }
 
         private float RandomizeSpeed()

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Core
 {
-    public class Game : MonoBehaviour
+    public sealed class Game : MonoBehaviour
     {
         [field: SerializeField] public ScoreCounter ScoreCounter { get; private set; }
 
