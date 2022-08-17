@@ -18,17 +18,17 @@ namespace Core
             ScoreData = scoreData;
         }
 
-        public void AddScore(float asteroidSize)
+        public void AddScore(float size)
         {
-            if (ScoreData.MaxSize < asteroidSize)
+            if (ScoreData.MaxSize < size)
             {
                 Score += ScoreData.MaxReward;
             }
-            else if (ScoreData.MaxSize > asteroidSize && asteroidSize > ScoreData.OrdinarySize)
+            else if (ScoreData.MaxSize > size && size > ScoreData.OrdinarySize)
             {
                 Score += ScoreData.OrdinaryReward;
             }
-            else if(asteroidSize < ScoreData.OrdinarySize)
+            else if(size < ScoreData.OrdinarySize)
             {
                 Score += ScoreData.MinReward;
             }

@@ -18,11 +18,10 @@ namespace Entities
     public class AsteroidEntity : Entity
     {
         [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
-        [field: SerializeField] public float Size { get; set; }
-        
-        [SerializeField] private Rigidbody2D _rigidbody;
+        [field: SerializeField] public float Size { get; set; } 
 
         private SpriteRenderer _spriteRenderer;
+        private Rigidbody2D _rigidbody;
 
         public event Action<AsteroidEntity> OnAsteroidDestroyed;
         public event Action<AsteroidEntity> OnAsteroidReleased;
@@ -31,6 +30,7 @@ namespace Entities
             base.Awake();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         public override void Die()
