@@ -1,4 +1,5 @@
-﻿using Combat.Projectiles.Core;
+﻿using AudioSystem;
+using Combat.Projectiles.Core;
 using Interaction;
 using ObjectPoolers;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace Combat
         {
             _readyToAttack = false;
             var bullet = ProjectilePool.Instance.GetPrefab();
+            AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
             _missleObject.transform.position = transform.position;
             _missleObject.transform.rotation = transform.rotation;

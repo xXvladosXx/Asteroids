@@ -39,18 +39,22 @@ namespace Spawners
 
         private void OnAsteroidReleased(AsteroidEntity asteroidEntity)
         {
-            asteroidEntity.OnAsteroidReleased -= OnAsteroidReleased;
-            
-            AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
+            ReleaseAsteroid(asteroidEntity);
         }
 
         private void OnAsteroidDestroyed(AsteroidEntity asteroidEntity)
         {
-            asteroidEntity.OnAsteroidDestroyed -= OnAsteroidDestroyed;
+            ReleaseAsteroid(asteroidEntity);
             
-            AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
-
             OnScoreAdded?.Invoke(asteroidEntity.Size);
+        }
+        
+        private void ReleaseAsteroid(AsteroidEntity asteroidEntity)
+        {
+            asteroidEntity.OnAsteroidReleased -= OnAsteroidReleased;
+            asteroidEntity.OnAsteroidDestroyed -= OnAsteroidDestroyed;
+
+            AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
         }
     }
 }

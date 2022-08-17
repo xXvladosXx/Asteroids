@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UI.Core
 {
-    public class UIController : MonoBehaviour
+    public abstract class UIController : MonoBehaviour
     {
         private UIData _uiData;
         private List<StaticUIElement> _staticUIElements = new List<StaticUIElement>();
@@ -17,7 +17,7 @@ namespace UI.Core
         public event Action OnPopupUIOpened;
         public event Action OnPopupUIHide;
         
-        public void Init(UIData uiData)
+        public virtual void Init(UIData uiData)
         {
             _staticUIElements = GetComponentsInChildren<StaticUIElement>().ToList();
             _popupUIElements = GetComponentsInChildren<PopupUIElement>().ToList();
@@ -47,8 +47,8 @@ namespace UI.Core
         {
             OnPopupUIOpened?.Invoke();
         }
-        
-        public void SwitchUIElement<T>() where T : PopupUIElement
+
+        protected void SwitchUIElement<T>() where T : PopupUIElement
         {
             if (_currentPopupUIElement != null)
             {
@@ -80,6 +80,15 @@ namespace UI.Core
             _currentPopupUIElement.OnElementHide -= HideUIElement;
             _currentPopupUIElement.Hide();
             _currentPopupUIElement = null;
+        }
+
+        protected virtual void OnDisable()
+        {
+            foreach (var popupUIElement in _popupUIElements)
+            {
+                popupUIElement.OnElementShow -= OnPopupShow;
+                popupUIElement.OnElementHide -= OnPopupHide;
+            }
         }
     }
 }

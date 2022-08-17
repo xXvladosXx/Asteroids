@@ -150,6 +150,7 @@ MonoBehaviour:
     <ProjectileSpeed>k__BackingField: 500
     <MaxLifeTime>k__BackingField: 8
     <TimeBetweenShooting>k__BackingField: 0.1
+    <AudioClip>k__BackingField: {fileID: 8300000, guid: 0110f611fa901b44aaf4d28ada8d2d3b, type: 3}
   <ProjectileModifiersOnStart>k__BackingField: []
   <ProjectileModifiersOnDestroy>k__BackingField:
   - {fileID: 11400000, guid: 748f183b79aecd340bb88f6841a2ddd5, type: 2}

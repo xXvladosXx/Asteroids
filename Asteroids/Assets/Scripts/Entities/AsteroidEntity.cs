@@ -1,4 +1,5 @@
 using System;
+using AudioSystem;
 using Combat;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
@@ -38,6 +39,7 @@ namespace Entities
             explosion.transform.position = transform.position;
             explosion.Play();
             this.CallWithDelay((() => ExplosionPool.Instance.ReleasePrefab(explosion)), 1f);
+            AudioManager.Instance.PlayEffectSound(AsteroidData.AudioClip);
             
             if (Size > AsteroidData.SizeToSplit)
             {
