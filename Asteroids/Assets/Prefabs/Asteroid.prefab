@@ -157,3 +157,4 @@ MonoBehaviour:
     <Lifetime>k__BackingField: 10
     <AudioClip>k__BackingField: {fileID: 8300000, guid: 15a566bb0355a4443811b66e7f442285, type: 3}
   <Size>k__BackingField: 0
+  _rigidbody: {fileID: 5539766041552179305}

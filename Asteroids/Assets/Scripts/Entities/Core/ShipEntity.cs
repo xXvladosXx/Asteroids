@@ -13,10 +13,15 @@ namespace Entities.Core
 
         protected override void Awake()
         {
-            base.Awake();
-
             AttackMaker = GetComponent<AttackMaker>();
             AttackMaker.Init(ObjectPicker);
+            
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
+        {
+            
         }
     }
 }

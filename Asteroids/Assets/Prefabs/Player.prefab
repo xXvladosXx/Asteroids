@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a507e4d319138d44482579bc5610a9e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -151,9 +151,10 @@ MonoBehaviour:
   <ObjectPicker>k__BackingField:
     <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
     <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
-  <PlayerData>k__BackingField:
+  <PlayerSettings>k__BackingField:
     <MovementSpeed>k__BackingField: 2
     <RotationSpeed>k__BackingField: 1
+  _rigidbody2D: {fileID: 307852637447588281}
 --- !u!114 &307852637447588260
 MonoBehaviour:
   m_ObjectHideFlags: 0

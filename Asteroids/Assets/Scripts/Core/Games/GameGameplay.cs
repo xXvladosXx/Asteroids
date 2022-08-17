@@ -8,6 +8,7 @@ using Spawners;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Core.Games
 {
@@ -16,13 +17,22 @@ namespace Core.Games
         [field: SerializeField] public ScoreCounter ScoreCounter { get; private set; }
         [field: SerializeField] public CameraShakerData CameraShakerData { get; private set; }
         
-        [SerializeField] private PlayerEntity _player;
-        [SerializeField] private UIController _uiController;
-        [SerializeField] private AsteroidSpawner _asteroidSpawner;
-
         private GameContext _gameContext;
         private SaveSystem _saveSystem;
+        
+        private PlayerEntity _player;
+        private UIController _uiController;
+        private AsteroidSpawner _asteroidSpawner;
 
+
+        [Inject]
+        private void Construct(PlayerEntity playerEntity, 
+            UIController uiController, AsteroidSpawner asteroidSpawner)
+        {
+            _player = playerEntity;
+            _uiController = uiController;
+            _asteroidSpawner = asteroidSpawner;
+        }
         private void Awake()
         {
             _gameContext = new GameContext();

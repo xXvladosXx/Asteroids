@@ -6,6 +6,7 @@ using Interaction;
 using Interaction.Weapon;
 using UnityEngine;
 using Utilities.Input;
+using Zenject;
 
 namespace Entities
 {
@@ -13,21 +14,24 @@ namespace Entities
         typeof(Rigidbody2D))]
     public class PlayerEntity : ShipEntity
     {
-        [field: SerializeField] public PlayerData PlayerData { get; private set; }
+        [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
+        [SerializeField] private Rigidbody2D _rigidbody2D;
 
         private PlayerInput _playerInput;
-        private Rigidbody2D _rigidbody2D;
         
         private bool _moving;
         private float _movementDirection;
 
         public event Action OnDied;
-        protected override void Awake()
-        {
-            base.Awake();
 
-            _playerInput = GetComponent<PlayerInput>();
-            _rigidbody2D = GetComponent<Rigidbody2D>();
+        [Inject]
+        public void Construct(PlayerInput playerInput)
+        {
+            _playerInput = playerInput;
+        }
+        
+        protected override void OnAwake()
+        {
         }
 
         public override void Die()
@@ -72,12 +76,12 @@ namespace Entities
         {
             if (_moving)
             {
-                _rigidbody2D.AddForce(transform.up * PlayerData.MovementSpeed);
+                _rigidbody2D.AddForce(transform.up * PlayerSettings.MovementSpeed);
             }
 
             if (_movementDirection != 0)
             {
-                _rigidbody2D.AddTorque(_movementDirection * PlayerData.RotationSpeed);
+                _rigidbody2D.AddTorque(_movementDirection * PlayerSettings.RotationSpeed);
             }
         }
 
