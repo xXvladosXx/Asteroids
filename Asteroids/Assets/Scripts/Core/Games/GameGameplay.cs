@@ -14,7 +14,6 @@ namespace Core.Games
 {
     public sealed class GameGameplay : MonoBehaviour
     {
-        [field: SerializeField] public ScoreCounter ScoreCounter { get; private set; }
         [field: SerializeField] public CameraShakerData CameraShakerData { get; private set; }
         
         private GameContext _gameContext;
@@ -23,15 +22,17 @@ namespace Core.Games
         private PlayerEntity _player;
         private UIController _uiController;
         private AsteroidSpawner _asteroidSpawner;
-
+        private ScoreCounter _scoreCounter;
 
         [Inject]
         private void Construct(PlayerEntity playerEntity, 
-            UIController uiController, AsteroidSpawner asteroidSpawner)
+            UIController uiController, AsteroidSpawner asteroidSpawner, 
+            ScoreCounter scoreCounter)
         {
             _player = playerEntity;
             _uiController = uiController;
             _asteroidSpawner = asteroidSpawner;
+            _scoreCounter = scoreCounter;
         }
         private void Awake()
         {
@@ -41,7 +42,7 @@ namespace Core.Games
             _uiController.Init(new UIData
             {
                 Player = _player,
-                ScoreCounter = ScoreCounter,
+                ScoreCounter = _scoreCounter,
                 GameContext = _gameContext,
                 SaveSystem = _saveSystem
             });
@@ -57,7 +58,7 @@ namespace Core.Games
 
         private void OnEnable()
         {
-            _asteroidSpawner.OnScoreAdded += ScoreCounter.AddScore;
+            _asteroidSpawner.OnScoreAdded += _scoreCounter.AddScore;
             _player.OnDied += StartCameraShaking;
             _gameContext.OnReloadRequire += ReloadLevel;
         }
@@ -74,7 +75,7 @@ namespace Core.Games
         
         private void OnDisable()
         {
-            _asteroidSpawner.OnScoreAdded -= ScoreCounter.AddScore;
+            _asteroidSpawner.OnScoreAdded -= _scoreCounter.AddScore;
             _player.OnDied -= StartCameraShaking;
             _gameContext.OnReloadRequire -= ReloadLevel;
         }

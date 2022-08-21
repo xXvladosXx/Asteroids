@@ -10,27 +10,11 @@ namespace UI.Score
     {
         [SerializeField] private TextMeshProUGUI _score;
 
-        private ScoreCounter _scoreCounter;
 
-        public override void Init(UIData uiData)
+        public void ChangeScore(int value)
         {
-            base.Init(uiData);
-
-            _scoreCounter = uiData.ScoreCounter;
-            
-            _score.text = _scoreCounter.Score.ToString();
-
-            _scoreCounter.OnScoreChanged += ChangeScore;
+            _score.text = value.ToString();
         }
 
-        private void ChangeScore()
-        {
-            _score.text = _scoreCounter.Score.ToString();
-        }
-
-        private void OnDisable()
-        {
-            _scoreCounter.OnScoreChanged -= ChangeScore;
-        }
     }
 }

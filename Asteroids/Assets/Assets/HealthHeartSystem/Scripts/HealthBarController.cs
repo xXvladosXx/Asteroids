@@ -70,10 +70,9 @@ public class HealthBarController : MonoBehaviour
     {
         for (int i = 0; i < PlayerStats.Instance.MaxTotalHealth; i++)
         {
-            GameObject temp = Instantiate(heartContainerPrefab);
-            temp.transform.SetParent(heartsParent, false);
+            GameObject temp = Instantiate(heartContainerPrefab, heartsParent, false);
             heartContainers[i] = temp;
-            heartFills[i] = temp.transform.Find("HeartFill").GetComponent<Image>();
+            heartFills[i] = temp.transform.Find("Filled").GetComponent<Image>();
         }
     }
 }

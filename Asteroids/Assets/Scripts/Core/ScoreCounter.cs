@@ -10,7 +10,7 @@ namespace Core
         [field: SerializeField] public ScoreData ScoreData { get; private set; }
         public int Score { get; private set; }
         
-        public event Action OnScoreChanged;
+        public event Action<int> OnScoreChanged;
         
         public ScoreCounter(ScoreData scoreData)
         {
@@ -33,7 +33,7 @@ namespace Core
                 Score += ScoreData.MinReward;
             }
             
-            OnScoreChanged?.Invoke();
+            OnScoreChanged?.Invoke(Score);
         }
     }
 }

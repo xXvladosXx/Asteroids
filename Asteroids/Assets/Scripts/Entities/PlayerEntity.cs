@@ -1,9 +1,11 @@
 using System;
 using Combat;
+using Combat.Core;
 using Data.Player;
 using Entities.Core;
 using Interaction;
 using Interaction.Weapon;
+using StatsSystem.Core;
 using UnityEngine;
 using Utilities.Input;
 using Zenject;
@@ -30,10 +32,6 @@ namespace Entities
             _playerInput = playerInput;
         }
         
-        protected override void OnAwake()
-        {
-        }
-
         public override void Die()
         {
             Destroy(gameObject);   
@@ -47,7 +45,12 @@ namespace Entities
 
             if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
-                Shoot();
+                ApplyHit(new HitData
+                {
+                    Damage = StatsData.GetStat(Stats.Damage),
+                    Hurtbox = this,
+                    Transform = transform 
+                });
             }
         }
 
@@ -85,18 +88,18 @@ namespace Entities
             }
         }
 
-        private void Shoot()
-        {
-            if(AttackMaker.CanMakeFire())
-                AttackMaker.Fire(transform);
-        }
-
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.transform.TryGetComponent(out PickableObject pickableObject))
             {
                 ObjectPicker.PickupObject(pickableObject);
             }
+        }
+
+        public override void ApplyHit(HitData hitData)
+        {
+            if(AttackMaker.CanMakeFire())
+                AttackMaker.Fire(hitData);
         }
     }
 }

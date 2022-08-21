@@ -28,8 +28,7 @@ namespace Combat.Projectiles.Modifiers
                 var projectile = Instantiate(Projectile);
                 projectile.transform.position = modifierData.Transform.position;
                 projectile.transform.rotation = modifierData.Transform.rotation;
-                projectile.Fire(spreadDir);
-
+                
                 angle += angleStep;
             }
         }

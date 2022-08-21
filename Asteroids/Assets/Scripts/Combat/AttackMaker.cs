@@ -1,4 +1,5 @@
 ﻿using AudioSystem;
+using Combat.Core;
 using Combat.Projectiles.Core;
 using Interaction;
 using ObjectPoolers;
@@ -25,19 +26,19 @@ namespace Combat
         }
         public bool CanMakeFire() => _readyToAttack;
 
-        public void Fire(Transform transform)
+        public void Fire(HitData hitData)
         {
             _readyToAttack = false;
             var bullet = ProjectilePool.Instance.GetPrefab();
             AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
-            _missleObject.transform.position = transform.position;
-            _missleObject.transform.rotation = transform.rotation;
+            _missleObject.transform.position = hitData.Transform.position;
+            _missleObject.transform.rotation = hitData.Transform.rotation;
             _missleObject.Play();
             
-            bullet.transform.position = transform.position;
-            bullet.transform.rotation = transform.rotation;
-            bullet.Fire(transform.up);    
+            bullet.transform.position = hitData.Transform.position;
+            bullet.transform.rotation = hitData.Transform.rotation;
+            bullet.ApplyHit(hitData);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);
         }

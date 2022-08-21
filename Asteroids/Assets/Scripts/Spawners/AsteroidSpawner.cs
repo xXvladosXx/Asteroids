@@ -29,7 +29,7 @@ namespace Spawners
                 asteroid.transform.position = spawnPoint;
                 asteroid.transform.rotation = rotation;
                 
-                asteroid.Size = Random.Range(asteroid.AsteroidData.MinSize, asteroid.AsteroidData.MaxSize);
+                asteroid.RandomizeSize();
                 asteroid.SetDirection(rotation * -spawnDirection);
 
                 asteroid.OnAsteroidDestroyed += OnAsteroidDestroyed;
@@ -44,9 +44,21 @@ namespace Spawners
 
         private void OnAsteroidDestroyed(AsteroidEntity asteroidEntity)
         {
-            ReleaseAsteroid(asteroidEntity);
+            if (asteroidEntity.Size > asteroidEntity.AsteroidData.SizeToSplit)
+            {
+                var firstSplit = AsteroidPool.Instance.GetPrefab();
+                asteroidEntity.CreateSplit(firstSplit);
+                firstSplit.OnAsteroidDestroyed += OnAsteroidDestroyed;
+                firstSplit.OnAsteroidReleased += OnAsteroidReleased;
+                
+                var secondSplit = AsteroidPool.Instance.GetPrefab();
+                asteroidEntity.CreateSplit(secondSplit);
+                secondSplit.OnAsteroidDestroyed += OnAsteroidDestroyed;
+                secondSplit.OnAsteroidReleased += OnAsteroidReleased;
+            }
             
             OnScoreAdded?.Invoke(asteroidEntity.Size);
+            ReleaseAsteroid(asteroidEntity);
         }
         
         private void ReleaseAsteroid(AsteroidEntity asteroidEntity)
@@ -55,6 +67,8 @@ namespace Spawners
             asteroidEntity.OnAsteroidDestroyed -= OnAsteroidDestroyed;
 
             AsteroidPool.Instance.ReleasePrefab(asteroidEntity);
+            
+            asteroidEntity.RandomizeSize();
         }
     }
 }

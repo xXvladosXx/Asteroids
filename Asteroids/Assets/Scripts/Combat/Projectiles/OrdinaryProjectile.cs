@@ -1,4 +1,5 @@
-﻿using Combat.Projectiles.Core;
+﻿using Combat.Core;
+using Combat.Projectiles.Core;
 using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
@@ -7,10 +8,10 @@ namespace Combat.Projectiles
 {
     public class OrdinaryProjectile : Projectile
     {
-        public override void Fire(Vector2 direction)
+        public override void ApplyHit(HitData hitData)
         {
-            base.Fire(direction);
-            Rigidbody2D.AddForce(direction * ProjectileData.ProjectileSpeed);
+            base.ApplyHit(hitData);
+            Rigidbody2D.AddForce(hitData.Transform.up * ProjectileData.ProjectileSpeed);
             
             this.CallWithDelay(ReleaseProjectile, ProjectileData.MaxLifeTime);
         }
