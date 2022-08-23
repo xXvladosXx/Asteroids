@@ -45,7 +45,7 @@ namespace Entities
 
             if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
-                ApplyHit(new HitData
+                ApplyAttack(new HitData
                 {
                     Damage = StatsData.GetStat(Stats.Damage),
                     Hurtbox = this,
@@ -96,7 +96,7 @@ namespace Entities
             }
         }
 
-        public override void ApplyHit(HitData hitData)
+        public override void ApplyAttack(HitData hitData)
         {
             if(AttackMaker.CanMakeFire())
                 AttackMaker.Fire(hitData);

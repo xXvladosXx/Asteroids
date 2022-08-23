@@ -1,10 +1,12 @@
 ﻿using AudioSystem;
 using Combat.Core;
+using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Interaction;
 using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
+using Zenject;
 
 namespace Combat
 {
@@ -38,7 +40,7 @@ namespace Combat
             
             bullet.transform.position = hitData.Transform.position;
             bullet.transform.rotation = hitData.Transform.rotation;
-            bullet.ApplyHit(hitData);    
+            bullet.ApplyAttack(hitData);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);
         }

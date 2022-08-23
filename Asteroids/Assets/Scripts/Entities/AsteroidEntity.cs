@@ -1,4 +1,5 @@
 using System;
+using AsteroidZenject;
 using AudioSystem;
 using Combat;
 using Combat.Core;
@@ -11,6 +12,7 @@ using Spawners.Core;
 using StatsSystem.Core;
 using UnityEngine;
 using Utilities.Extensions;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Entities
@@ -102,7 +104,5 @@ namespace Entities
                 Die();
             }
         }
-
-        
     }
 }

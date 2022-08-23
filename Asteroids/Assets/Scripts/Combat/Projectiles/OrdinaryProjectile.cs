@@ -3,14 +3,15 @@ using Combat.Projectiles.Core;
 using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
+using Zenject;
 
 namespace Combat.Projectiles
 {
     public class OrdinaryProjectile : Projectile
     {
-        public override void ApplyHit(HitData hitData)
+        public override void ApplyAttack(HitData hitData)
         {
-            base.ApplyHit(hitData);
+            base.ApplyAttack(hitData);
             Rigidbody2D.AddForce(hitData.Transform.up * ProjectileData.ProjectileSpeed);
             
             this.CallWithDelay(ReleaseProjectile, ProjectileData.MaxLifeTime);

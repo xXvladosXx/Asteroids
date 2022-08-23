@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Entities.Core
 {
     [RequireComponent(typeof(AttackMaker))]
-    public abstract class ShipEntity : Entity, IDamagable, IHitApplier
+    public abstract class ShipEntity : Entity, IDamagable, IAttackApplier
     {
         [field: SerializeField] public float Damage { get; private set; }
         [field: SerializeField] public ObjectPicker ObjectPicker { get; private set; }
@@ -18,7 +18,7 @@ namespace Entities.Core
             AttackMaker.Init(ObjectPicker);
         }
 
-        public abstract void ApplyHit(HitData hitData);
+        public abstract void ApplyAttack(HitData hitData);
 
         public void ReceiveDamage(HitData hitData)
         {
