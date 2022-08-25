@@ -6,6 +6,7 @@ using Entities;
 using Saving;
 using Spawners;
 using UI.Core;
+using UI.GameOver;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -58,7 +59,6 @@ namespace Core.Games
 
         private void OnEnable()
         {
-            _asteroidSpawner.OnScoreAdded += _scoreCounter.AddScore;
             _player.OnDied += StartCameraShaking;
             _gameContext.OnReloadRequire += ReloadLevel;
         }
@@ -75,7 +75,6 @@ namespace Core.Games
         
         private void OnDisable()
         {
-            _asteroidSpawner.OnScoreAdded -= _scoreCounter.AddScore;
             _player.OnDied -= StartCameraShaking;
             _gameContext.OnReloadRequire -= ReloadLevel;
         }

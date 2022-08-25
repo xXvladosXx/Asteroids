@@ -50,19 +50,18 @@ namespace Combat.Projectiles.Core
 
             _startTime = Time.deltaTime;
         }
-        protected virtual void OnCollisionEnter2D(Collision2D col)
-        {
-            /*if (col.transform.TryGetComponent(out IDamagable hurtable))
-            {
-                hurtable.ReceiveDamage(_hitData);
-            }*/
 
-            if (col.collider.TryGetComponent(out AsteroidFacade asteroidFacade))
+        protected virtual void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.TryGetComponent(out IDamageReceiver hurtable))
             {
-                asteroidFacade.Die();
+                if(col.transform == _hitData.DamageApplier) return;
+
+                hurtable.ReceiveDamage(_hitData);
+                ReleaseProjectile();
             }
         }
-        
-       
+
+        protected abstract void ReleaseProjectile();
     }
 }

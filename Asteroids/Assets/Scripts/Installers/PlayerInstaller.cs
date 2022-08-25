@@ -15,15 +15,14 @@ namespace Installers
         public override void InstallBindings()
         {
             Container.Bind<Heath>().FromSubContainerResolve().ByMethod(InstallPlayerHealth).AsSingle();
-            
             Container.BindInterfacesAndSelfTo<PlayerEntity>().FromInstance(_playerEntity).AsSingle();
             Container.Bind<PlayerInput>().FromInstance(_playerInput).AsSingle();
         }
 
-        private void InstallPlayerHealth(DiContainer diContainer)
+        private void InstallPlayerHealth(DiContainer subContainer)
         {
-            diContainer.Bind<Heath>().AsSingle();
-            diContainer.BindInstance(_playerEntity.StatsData.GetStat(Stats.Health)).AsSingle();
+            subContainer.Bind<Heath>().AsSingle();
+            subContainer.BindInstance(_playerEntity.StatsData.GetStat(Stats.Health)).AsSingle();
         }
     }
 }

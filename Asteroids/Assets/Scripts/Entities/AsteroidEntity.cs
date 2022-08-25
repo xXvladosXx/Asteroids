@@ -19,7 +19,7 @@ namespace Entities
 {
     [RequireComponent(typeof(Rigidbody2D),
         typeof(SpriteRenderer))]
-    public class AsteroidEntity : Entity, IDamagable
+    public class AsteroidEntity : Entity
     {
         [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
         [field: SerializeField] public float Size { get; set; }
@@ -27,14 +27,6 @@ namespace Entities
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        public event Action<AsteroidEntity> OnAsteroidDestroyed;
-        public event Action<AsteroidEntity> OnAsteroidReleased;
-        
-        public void ReceiveDamage(HitData hitData)
-        {
-            Die();
-        }
-        
         public override void Die()
         {
             var explosion = ExplosionPool.Instance.GetPrefab();
@@ -42,10 +34,13 @@ namespace Entities
             explosion.Play();
             this.CallWithDelay((() => ExplosionPool.Instance.ReleasePrefab(explosion)), 1f);
             AudioManager.Instance.PlayEffectSound(AsteroidData.AudioClip);
-
-            OnAsteroidDestroyed?.Invoke(this);
         }
 
+        public void ReceiveDamage(HitData hitData)
+        {
+            Die();
+        }
+        
         private void Start()
         {
             _spriteRenderer.sprite = AsteroidData.PossibleSprites[Random.Range(0, AsteroidData.PossibleSprites.Length)];
@@ -55,8 +50,6 @@ namespace Entities
         public void SetDirection(Vector3 direction)
         {
             _rigidbody.AddForce(direction * RandomizeSpeed());
-            
-            this.CallWithDelay(ReleaseAsteroid, AsteroidData.Lifetime);
         }
         public void RandomizeSize()
         {
@@ -80,29 +73,19 @@ namespace Entities
             asteroidEntity.SetDirection(Random.insideUnitCircle.normalized * RandomizeSpeed());
         }
 
-        private void ReleaseAsteroid()
-        {
-            OnAsteroidReleased?.Invoke(this);
-        }
-
         private float RandomizeSpeed()
         {
             var possibleSpeed = Random.Range(AsteroidData.MinSpeed, AsteroidData.MaxSpeed);
             return possibleSpeed;
         }
 
-       
-        private void OnCollisionEnter2D(Collision2D col)
+        public void ApplyAttack(IDamageReceiver damageReceiver)
         {
-            if (col.transform.TryGetComponent(out IDamagable hurtable))
+            damageReceiver.ReceiveDamage(new HitData
             {
-                hurtable.ReceiveDamage(new HitData
-                {
-                    Damage = StatsData.GetStat(Stats.Damage)
-                });
-                
-                Die();
-            }
+                Damage = StatsData.GetStat(Stats.Damage)
+            });
+            
         }
     }
 }

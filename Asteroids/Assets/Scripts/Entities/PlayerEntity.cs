@@ -5,6 +5,7 @@ using Data.Player;
 using Entities.Core;
 using Interaction;
 using Interaction.Weapon;
+using StatsSystem;
 using StatsSystem.Core;
 using UnityEngine;
 using Utilities.Input;
@@ -27,8 +28,10 @@ namespace Entities
         public event Action OnDied;
 
         [Inject]
-        public void Construct(PlayerInput playerInput)
+        public void Construct(PlayerInput playerInput,
+            Heath heath)
         {
+            Heath = heath;
             _playerInput = playerInput;
         }
         
@@ -49,7 +52,7 @@ namespace Entities
                 {
                     Damage = StatsData.GetStat(Stats.Damage),
                     Hurtbox = this,
-                    Transform = transform 
+                    DamageApplier = transform 
                 });
             }
         }
@@ -94,12 +97,6 @@ namespace Entities
             {
                 ObjectPicker.PickupObject(pickableObject);
             }
-        }
-
-        public override void ApplyAttack(HitData hitData)
-        {
-            if(AttackMaker.CanMakeFire())
-                AttackMaker.Fire(hitData);
         }
     }
 }

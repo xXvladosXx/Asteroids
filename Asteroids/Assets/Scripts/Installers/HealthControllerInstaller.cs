@@ -15,15 +15,9 @@ namespace Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<Heath>().FromSubContainerResolve().ByMethod(InstallPlayerHealth).AsSingle();
             Container.Bind<HealthUI>().FromInstance(_healthUI).AsSingle();
+            
             Container.BindInterfacesAndSelfTo<HealthController>().AsSingle();
-        }
-
-        private void InstallPlayerHealth(DiContainer obj)
-        {
-            obj.Bind<Heath>().AsSingle();
-            obj.BindInstance(_playerEntity.StatsData.GetStat(Stats.Health)).AsSingle();
         }
     }
 }

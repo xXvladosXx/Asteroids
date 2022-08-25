@@ -34,12 +34,12 @@ namespace Combat
             var bullet = ProjectilePool.Instance.GetPrefab();
             AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
-            _missleObject.transform.position = hitData.Transform.position;
-            _missleObject.transform.rotation = hitData.Transform.rotation;
+            _missleObject.transform.position = hitData.DamageApplier.position;
+            _missleObject.transform.rotation = hitData.DamageApplier.rotation;
             _missleObject.Play();
             
-            bullet.transform.position = hitData.Transform.position;
-            bullet.transform.rotation = hitData.Transform.rotation;
+            bullet.transform.position = hitData.DamageApplier.position;
+            bullet.transform.rotation = hitData.DamageApplier.rotation;
             bullet.ApplyAttack(hitData);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);

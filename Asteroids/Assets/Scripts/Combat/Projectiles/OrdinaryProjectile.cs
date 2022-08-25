@@ -12,18 +12,17 @@ namespace Combat.Projectiles
         public override void ApplyAttack(HitData hitData)
         {
             base.ApplyAttack(hitData);
-            Rigidbody2D.AddForce(hitData.Transform.up * ProjectileData.ProjectileSpeed);
+            Rigidbody2D.AddForce(hitData.DamageApplier.up * ProjectileData.ProjectileSpeed);
             
             this.CallWithDelay(ReleaseProjectile, ProjectileData.MaxLifeTime);
         }
         
-        protected override void OnCollisionEnter2D(Collision2D col)
+        protected override void OnTriggerEnter2D(Collider2D col)
         {
-            base.OnCollisionEnter2D(col);
-            ReleaseProjectile();
+            base.OnTriggerEnter2D(col);
         }
         
-        private void ReleaseProjectile()
+        protected override void ReleaseProjectile()
         {
             ProjectilePool.Instance.ReleasePrefab(this);
         }

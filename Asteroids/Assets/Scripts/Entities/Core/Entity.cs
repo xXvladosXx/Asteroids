@@ -9,17 +9,16 @@ namespace Entities.Core
 {
     public abstract class Entity : MonoBehaviour, IInitializable, IDisposable, IHurtbox
     {
-        [field: SerializeField] public Heath Heath { get; private set; }
+        [field: SerializeField] public Heath Heath { get; protected set; }
         [field: SerializeField] public StatsData StatsData { get; private set; }
         
-        [Inject]
-        public void Construct(Heath heath)
+        public void Construct()
         {
-            Heath = heath;
+            Heath = new Heath(StatsData.GetStat(Stats.Health));
+            print(Heath.MaxValue);
         }
         
         public abstract void Die();
-        public IDamagable Damagable { get; set; }
         protected virtual void Awake() { }
         public void Initialize()
         {
