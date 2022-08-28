@@ -1,4 +1,5 @@
 using System;
+using Combat.Core;
 using StatsSystem.Core;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace StatsSystem
         public float CurrentValue { get; private set; }
         public float MaxValue { get; }
 
-        public event Action OnDied;
+        public event Action<IAttackApplier> OnDied;
         public event Action<float, float> OnDamageReceived;
 
         public Heath(float value)
@@ -18,15 +19,15 @@ namespace StatsSystem
             MaxValue = value;
         }
 
-        public void DecreaseHealth(float value)
+        public void DecreaseHealth(HitData hitData)
         {
-            CurrentValue = Mathf.Clamp(CurrentValue - value, 0, MaxValue);
+            CurrentValue = Mathf.Clamp(CurrentValue - hitData.Damage, 0, MaxValue);
 
             OnDamageReceived?.Invoke(MaxValue, CurrentValue);
             
             if (CurrentValue == 0)
             {
-                OnDied?.Invoke();
+                OnDied?.Invoke(hitData.AttackApplier);
             }
         }
     }

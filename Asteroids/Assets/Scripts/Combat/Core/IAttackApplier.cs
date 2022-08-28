@@ -1,7 +1,12 @@
+using Core;
+using UnityEngine;
+
 namespace Combat.Core
 {
     public interface IAttackApplier
     {
-        public void ApplyAttack(HitData hitData);
+        Transform User { get; }
+        IScoreCollector ScoreCollector { get; }
+        public void ApplyAttack(HitData hitData, IDamageReceiver damageReceiver);
     }
 }

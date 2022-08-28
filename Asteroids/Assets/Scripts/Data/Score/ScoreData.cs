@@ -14,5 +14,7 @@ namespace Data.Score
         [field: SerializeField] public int MinReward { get; private set; }
         [field: SerializeField] public int MaxReward { get; private set; }
         [field: SerializeField] public int OrdinaryReward { get; private set; }
+        
+        [field: SerializeField] public int EnemyShipReward { get; private set; }
     }
 }

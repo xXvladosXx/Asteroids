@@ -1,4 +1,5 @@
-﻿using AudioSystem;
+﻿using System;
+using AudioSystem;
 using Combat.Core;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
@@ -16,8 +17,15 @@ namespace Combat
         
         private ObjectPicker _objectPicker;
         private ParticleSystem _missleObject;
+        private OrdinaryProjectile.Factory _projectileFactory;
         
         private bool _readyToAttack = true;
+
+        [Inject]
+        public void Construct(OrdinaryProjectile.Factory projectileFactory)
+        {
+            _projectileFactory = projectileFactory;
+        }
         
         public void Init(ObjectPicker objectPicker)
         {
@@ -31,21 +39,29 @@ namespace Combat
         public void Fire(HitData hitData)
         {
             _readyToAttack = false;
-            var bullet = ProjectilePool.Instance.GetPrefab();
+            var bullet = _projectileFactory.Create();
             AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
-            _missleObject.transform.position = hitData.Transform.position;
-            _missleObject.transform.rotation = hitData.Transform.rotation;
+            var position = hitData.AttackApplier.User.position;
+            var rotation = hitData.AttackApplier.User.rotation;
+
+            _missleObject.transform.position = position;
+            _missleObject.transform.rotation = rotation;
             _missleObject.Play();
             
-            bullet.transform.position = hitData.Transform.position;
-            bullet.transform.rotation = hitData.Transform.rotation;
+            bullet.transform.position = position;
+            bullet.transform.rotation = rotation;
             bullet.ApplyAttack(hitData);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);
         }
 
         private void ResetShot()
+        {
+            _readyToAttack = true;
+        }
+
+        private void OnEnable()
         {
             _readyToAttack = true;
         }

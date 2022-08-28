@@ -1,10 +1,12 @@
 using System;
 using Combat;
 using Combat.Core;
+using Core;
 using Data.Player;
 using Entities.Core;
 using Interaction;
 using Interaction.Weapon;
+using StatsSystem;
 using StatsSystem.Core;
 using UnityEngine;
 using Utilities.Input;
@@ -24,18 +26,20 @@ namespace Entities
         private bool _moving;
         private float _movementDirection;
 
-        public event Action OnDied;
+        public override event Action<IAttackApplier> OnDied;
 
         [Inject]
-        public void Construct(PlayerInput playerInput)
+        public void Construct(PlayerInput playerInput,
+            Heath heath)
         {
+            Heath = heath;
             _playerInput = playerInput;
         }
         
-        public override void Die()
+        public override void Die(IAttackApplier attackApplier)
         {
             Destroy(gameObject);   
-            OnDied?.Invoke();
+            OnDied?.Invoke(attackApplier);
         }
         
         private void Update()
@@ -49,8 +53,8 @@ namespace Entities
                 {
                     Damage = StatsData.GetStat(Stats.Damage),
                     Hurtbox = this,
-                    Transform = transform 
-                });
+                    AttackApplier = this
+                }, null);
             }
         }
 
@@ -96,10 +100,5 @@ namespace Entities
             }
         }
 
-        public override void ApplyAttack(HitData hitData)
-        {
-            if(AttackMaker.CanMakeFire())
-                AttackMaker.Fire(hitData);
-        }
     }
 }

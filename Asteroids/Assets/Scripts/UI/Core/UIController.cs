@@ -48,7 +48,7 @@ namespace UI.Core
             OnPopupUIOpened?.Invoke();
         }
 
-        protected void SwitchUIElement<T>() where T : PopupUIElement
+        public void SwitchUIElement<T>() where T : PopupUIElement
         {
             if (_currentPopupUIElement != null)
             {
