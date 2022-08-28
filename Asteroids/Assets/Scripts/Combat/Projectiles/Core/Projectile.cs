@@ -20,6 +20,7 @@ namespace Combat.Projectiles.Core
         
         protected Rigidbody2D Rigidbody2D;
         private HitData _hitData;
+        protected IMemoryPool Pool;
 
         public Transform User => _hitData.AttackApplier.User;
      
@@ -27,7 +28,6 @@ namespace Combat.Projectiles.Core
         {
             Rigidbody2D = GetComponent<Rigidbody2D>();
         }
-
 
         public virtual void ApplyAttack(HitData hitData)
         {
@@ -45,6 +45,8 @@ namespace Combat.Projectiles.Core
                 
                 hurtable.ReceiveDamage(_hitData);
                 ReleaseProjectile();
+                
+                Pool?.Despawn(this);
             }
         }
 

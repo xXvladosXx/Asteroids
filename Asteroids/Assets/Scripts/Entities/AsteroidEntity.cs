@@ -29,10 +29,6 @@ namespace Entities
 
         public override void Die(IAttackApplier attackApplier)
         {
-            var explosion = ExplosionPool.Instance.GetPrefab();
-            explosion.transform.position = transform.position;
-            explosion.Play();
-            this.CallWithDelay((() => ExplosionPool.Instance.ReleasePrefab(explosion)), 1f);
             AudioManager.Instance.PlayEffectSound(AsteroidData.AudioClip);
         }
 

@@ -1,4 +1,5 @@
 using System;
+using AsteroidsZenject.EnemyShipZenject;
 using AsteroidZenject;
 using Combat.Core;
 using Combat.Projectiles;
@@ -35,8 +36,7 @@ namespace Controllers
             _scoreCounterUI.ChangeScore(_scoreCounter.Score);
 
             _scoreCounter.OnScoreChanged += FindEntityToAddScore;
-            _signalBus.Subscribe<AsteroidKilledSignal>(ChangeScore);
-            _signalBus.Subscribe<EnemyShipKilledSignal>(ChangeScore);
+            _signalBus.Subscribe<EntityKilledSignal>(ChangeScore);
         }
 
         private void FindEntityToAddScore(int value, IScoreCollector scoreCollector)
@@ -44,27 +44,22 @@ namespace Controllers
             switch (scoreCollector)
             {
                 case PlayerEntity playerEntity:
-                    _scoreCounterUI.ChangeScore(scoreCollector.Points);
+                    _scoreCounterUI.ChangeScore(playerEntity.Points);
                     break;
-                default:
-                    break;;
             }
         }
 
-        private void ChangeScore(AsteroidKilledSignal asteroidKilledSignal)
+        private void ChangeScore(EntityKilledSignal entityKilledSignal)
         {
-            _scoreCounter.AddScore(asteroidKilledSignal.AsteroidEntity, asteroidKilledSignal.Destroyer.ScoreCollector);
-        }
-        
-        private void ChangeScore(EnemyShipKilledSignal enemyShipKilledSignal)
-        {
-            _scoreCounter.AddScore(enemyShipKilledSignal.EnemyShip, enemyShipKilledSignal.Destroyer.ScoreCollector);
+            if(entityKilledSignal.AttackApplier == null) return;
+
+            _scoreCounter.AddScore(entityKilledSignal.Entity, entityKilledSignal.AttackApplier.ScoreCollector);
         }
 
         public void Dispose()
         {
             _scoreCounter.OnScoreChanged -= FindEntityToAddScore;
-            _signalBus.Unsubscribe<AsteroidKilledSignal>(ChangeScore);
+            _signalBus.Unsubscribe<EntityKilledSignal>(ChangeScore);
         }
     }
 }

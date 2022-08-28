@@ -34,7 +34,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<EnemyShipSpawner>().AsSingle();
             Container.BindFactory<Vector3, EnemyShipFacade, EnemyShipFacade.Factory>()
                 .FromPoolableMemoryPool<Vector3, EnemyShipFacade, EnemyShipFacadePool>(poolBinder => poolBinder
-                    .WithInitialSize(10)
+                    .WithInitialSize(100)
                     .FromSubContainerResolve()
                     .ByNewPrefabMethod(_enemyShip, InstallEnemyShip)
                     .UnderTransformGroup("Enemy Ships"));
@@ -46,7 +46,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<AsteroidSpawner>().AsSingle();
             Container.BindFactory<float, Vector3, AsteroidFacade, AsteroidFacade.Factory>()
                 .FromPoolableMemoryPool<float, Vector3, AsteroidFacade, AsteroidFacadePool>(poolBinder => poolBinder
-                    .WithInitialSize(10)
+                    .WithInitialSize(100)
                     .FromSubContainerResolve()
                     .ByNewPrefabMethod(_asteroidEntity, InstallAsteroid)
                     .UnderTransformGroup("Asteroids"));

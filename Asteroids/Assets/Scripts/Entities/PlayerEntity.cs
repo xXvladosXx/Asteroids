@@ -16,7 +16,7 @@ namespace Entities
 {
     [RequireComponent(typeof(PlayerInput),
         typeof(Rigidbody2D))]
-    public class PlayerEntity : ShipEntity, IScoreCollector
+    public class PlayerEntity : ShipEntity
     {
         [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [SerializeField] private Rigidbody2D _rigidbody2D;

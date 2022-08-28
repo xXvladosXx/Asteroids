@@ -1,4 +1,5 @@
-﻿using Combat.Core;
+﻿using System;
+using Combat.Core;
 using Combat.Projectiles.Core;
 using ObjectPoolers;
 using UnityEngine;
@@ -7,13 +8,8 @@ using Zenject;
 
 namespace Combat.Projectiles
 {
-    public class OrdinaryProjectile : Projectile, IPoolable<float, float, IMemoryPool>
+    public class OrdinaryProjectile : Projectile, IPoolable<IMemoryPool>
     {
-        private float _startTime;
-        private float _speed;
-        private float _lifeTime;
-        private IMemoryPool _pool;
-
         public override void ApplyAttack(HitData hitData)
         {
             base.ApplyAttack(hitData);
@@ -24,24 +20,20 @@ namespace Combat.Projectiles
 
         protected override void ReleaseProjectile()
         {
-            ProjectilePool.Instance.ReleasePrefab(this);
+            Pool.Despawn(this);
         }
 
-        public void OnSpawned(float speed, float lifeTime, IMemoryPool pool)
+        public void OnSpawned(IMemoryPool pool)
         {
-            _pool = pool;
-            _speed = speed;
-            _lifeTime = lifeTime;
-
-            _startTime = Time.realtimeSinceStartup;
+            Pool = pool;
         }
 
         public void OnDespawned()
         {
-            _pool = null;
+            Pool = null;
         }
 
-        public class Factory : PlaceholderFactory<float, float, IMemoryPool>
+        public class Factory : PlaceholderFactory<OrdinaryProjectile>
         {
         }
     }

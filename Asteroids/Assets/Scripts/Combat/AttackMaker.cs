@@ -17,8 +17,15 @@ namespace Combat
         
         private ObjectPicker _objectPicker;
         private ParticleSystem _missleObject;
+        private OrdinaryProjectile.Factory _projectileFactory;
         
         private bool _readyToAttack = true;
+
+        [Inject]
+        public void Construct(OrdinaryProjectile.Factory projectileFactory)
+        {
+            _projectileFactory = projectileFactory;
+        }
         
         public void Init(ObjectPicker objectPicker)
         {
@@ -32,7 +39,7 @@ namespace Combat
         public void Fire(HitData hitData)
         {
             _readyToAttack = false;
-            var bullet = ProjectilePool.Instance.GetPrefab();
+            var bullet = _projectileFactory.Create();
             AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
             var position = hitData.AttackApplier.User.position;

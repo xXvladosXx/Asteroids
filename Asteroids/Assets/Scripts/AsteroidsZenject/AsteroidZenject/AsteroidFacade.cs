@@ -14,7 +14,7 @@ namespace AsteroidZenject
     public class AsteroidFacade : MonoBehaviour, IPoolable<float, Vector3, IMemoryPool>,
         IDisposable, IDamageReceiver, IEnemy, IAttackApplier
     {
-        private AsteroidEntity AsteroidEntity { get; set; }
+        public AsteroidEntity AsteroidEntity { get; set; }
 
         private IMemoryPool _pool;
         private AsteroidDeathHandler _asteroidDeathHandler;

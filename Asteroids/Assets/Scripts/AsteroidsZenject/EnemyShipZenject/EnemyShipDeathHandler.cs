@@ -1,4 +1,6 @@
 using System;
+using AsteroidsZenject.EnemyShipZenject;
+using AsteroidsZenject.ExplosionZenject;
 using Combat.Core;
 using EnemyShipZenject;
 using UnityEngine;
@@ -10,12 +12,15 @@ namespace EnemiesZenject.EnemyShipZenject
     {
         private readonly EnemyShipFacade _enemyShipFacade;
         private readonly SignalBus _signalBus;
+        private readonly EnemyExplosion.Factory _explosionFactory;
 
         public EnemyShipDeathHandler(EnemyShipFacade enemyShipFacade,
-            SignalBus signalBus)
+            SignalBus signalBus,
+            EnemyExplosion.Factory explosionFactory)
         {
             _enemyShipFacade = enemyShipFacade;
             _signalBus = signalBus;
+            _explosionFactory = explosionFactory;
         }
         
         public void Initialize()
@@ -25,11 +30,13 @@ namespace EnemiesZenject.EnemyShipZenject
 
         private void Die(IAttackApplier attackApplier)
         {
-            _signalBus.Fire(new EnemyShipKilledSignal(_enemyShipFacade.EnemyShip, attackApplier));
+            var explosion = _explosionFactory.Create();
+            explosion.transform.position = _enemyShipFacade.EnemyShip.transform.position;
+            
+            _signalBus.Fire(new EntityKilledSignal(_enemyShipFacade.EnemyShip, attackApplier));
             
             _enemyShipFacade.Dispose();
         }
-
 
         public void Dispose()
         {
