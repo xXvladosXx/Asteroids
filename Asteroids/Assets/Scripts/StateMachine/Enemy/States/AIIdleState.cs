@@ -15,5 +15,10 @@ namespace StateMachine.Enemy.BaseStates
             
             BaseEnemyStateMachine.ChangeState(BaseEnemyStateMachine.AIAttackState);
         }
+
+        public override void FindTarget(Collider2D[] colliders)
+        {
+            
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using Combat;
 using Combat.Core;
+using Core;
 using Data.Player;
 using Entities.Core;
 using Interaction;
@@ -15,7 +16,7 @@ namespace Entities
 {
     [RequireComponent(typeof(PlayerInput),
         typeof(Rigidbody2D))]
-    public class PlayerEntity : ShipEntity
+    public class PlayerEntity : ShipEntity, IScoreCollector
     {
         [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -25,7 +26,7 @@ namespace Entities
         private bool _moving;
         private float _movementDirection;
 
-        public event Action OnDied;
+        public override event Action<IAttackApplier> OnDied;
 
         [Inject]
         public void Construct(PlayerInput playerInput,
@@ -35,10 +36,10 @@ namespace Entities
             _playerInput = playerInput;
         }
         
-        public override void Die()
+        public override void Die(IAttackApplier attackApplier)
         {
             Destroy(gameObject);   
-            OnDied?.Invoke();
+            OnDied?.Invoke(attackApplier);
         }
         
         private void Update()
@@ -52,8 +53,8 @@ namespace Entities
                 {
                     Damage = StatsData.GetStat(Stats.Damage),
                     Hurtbox = this,
-                    DamageApplier = transform 
-                });
+                    AttackApplier = this
+                }, null);
             }
         }
 
@@ -98,5 +99,6 @@ namespace Entities
                 ObjectPicker.PickupObject(pickableObject);
             }
         }
+
     }
 }

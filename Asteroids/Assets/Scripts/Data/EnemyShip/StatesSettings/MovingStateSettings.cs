@@ -8,5 +8,6 @@ namespace Data.EnemyShip
     {
         [field: SerializeField] public float MovementSpeed { get; private set; }
         [field: SerializeField] public float StoppingDistanceToPlayer { get; private set; }
+        [field: SerializeField] public float RotationSpeed { get; private set; }
     }
 }

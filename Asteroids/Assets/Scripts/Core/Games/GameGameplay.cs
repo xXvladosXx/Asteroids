@@ -1,6 +1,7 @@
 ﻿using System;
 using AudioSystem;
 using Camera;
+using Combat.Core;
 using Data.Camera;
 using Entities;
 using Saving;
@@ -59,11 +60,11 @@ namespace Core.Games
 
         private void OnEnable()
         {
-            _player.OnDied += StartCameraShaking;
+            _player.Heath.OnDied += StartCameraShaking;
             _gameContext.OnReloadRequire += ReloadLevel;
         }
 
-        private void StartCameraShaking()
+        private void StartCameraShaking(IAttackApplier attackApplier)
         {
             CameraShaker.Instance.StartShaking(CameraShakerData.Time, CameraShakerData.Magnitude);
         }
@@ -75,7 +76,7 @@ namespace Core.Games
         
         private void OnDisable()
         {
-            _player.OnDied -= StartCameraShaking;
+            _player.Heath.OnDied -= StartCameraShaking;
             _gameContext.OnReloadRequire -= ReloadLevel;
         }
     }

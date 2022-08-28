@@ -1,3 +1,4 @@
+using Combat.Core;
 using Data.EnemyShip;
 using EnemyShipZenject;
 using Entities.Core;
@@ -6,23 +7,25 @@ using UnityEngine;
 
 namespace StateMachine.Enemy.BaseStates
 {
-    public abstract class AIBaseState : IState
+    public abstract class AIBaseState : IState, ITargetFinder
     {
         protected readonly EnemyShip EnemyShip;
         protected readonly BaseEnemyStateMachine BaseEnemyStateMachine;
         protected readonly EnemyTriggerColliderSettings TriggerColliderData;
-        private readonly MovingStateSettings MovingStateSettings;
-
+        
+        private readonly MovingStateSettings _movingStateSettings;
+        
         public AIBaseState(EnemyShip enemyShip, BaseEnemyStateMachine baseEnemyStateMachine)
         {
             EnemyShip = enemyShip;
             BaseEnemyStateMachine = baseEnemyStateMachine;
             TriggerColliderData = EnemyShip.EnemyTriggerColliderSettings;
-            MovingStateSettings = EnemyShip.StateSettings.MovingStateSettings;
+            _movingStateSettings = EnemyShip.StateSettings.MovingStateSettings;
         }
 
         public virtual void Enter()
         {
+            BaseEnemyStateMachine.EnemyStateReusableData.RotationSpeed = _movingStateSettings.RotationSpeed;
         }
 
         public virtual void Exit()
@@ -31,10 +34,18 @@ namespace StateMachine.Enemy.BaseStates
 
         public virtual void Update()
         {
+            FindTarget(FindAsteroids());
         }
 
         public virtual void FixedUpdate()
         {
+            if (IsThereAsteroidNear())
+            {
+                AvoidAsteroid();
+
+                return;
+            }
+            
             if (IsTherePlayerNear())
             {
                 Move(-EnemyShip.Rigidbody2D.transform.up);
@@ -58,44 +69,94 @@ namespace StateMachine.Enemy.BaseStates
         {
         }
 
-        private bool IsThereBoundaryNear()
+        public virtual void FindTarget(Collider2D[] colliders)
         {
-            var overlappedBoundColliders = GetPossibleBounds();
+            Transform possibleTarget = null;
+                
+            foreach (var possibleAsteroid in colliders)
+            {
+                possibleTarget = possibleAsteroid.transform;
 
-            return overlappedBoundColliders.Length > 0;
+                if (Vector2.Distance(possibleTarget.transform.position, EnemyShip.transform.position) >
+                    Vector2.Distance(possibleAsteroid.transform.position, EnemyShip.transform.position))
+                {
+                    possibleTarget = possibleAsteroid.transform;
+                }
+                    
+                BaseEnemyStateMachine.EnemyStateReusableData.AsteroidLastMoveDirection = 
+                    (possibleTarget.transform.position - BaseEnemyStateMachine.EnemyStateReusableData.AsteroidPreviousPosition).normalized;
+                BaseEnemyStateMachine.EnemyStateReusableData.AsteroidPreviousPosition = possibleTarget.transform.position;
+            }
+
+            RotateTowardsTargetPosition(possibleTarget);
         }
+
+        public Collider2D[] PossibleTargets(LayerMask layerMask, Vector2 centre, Vector2 size, float angle)
+        {
+            Vector3 centerInWorldSpace = centre;
+
+            var possibleTargets = Physics2D.OverlapBoxAll(
+                centerInWorldSpace, size, angle, layerMask);
+            
+            return possibleTargets;
+        }
+
+        private void Move(Vector2 direction)
+        {
+            EnemyShip.Rigidbody2D.AddForce(direction * _movingStateSettings.MovementSpeed);
+        }
+        
         private bool IsTherePlayerNear()
         {
             return !(Vector3.Distance(EnemyShip.Target.transform.position, EnemyShip.transform.position) >
                      EnemyShip.StateSettings.MovingStateSettings.StoppingDistanceToPlayer);
         }
-        private Collider2D[] GetPossibleBounds()
-        {
-            Vector3 colliderCenterInWorldSpace = TriggerColliderData.BoundaryCheckCollider.bounds.center;
+        
+        private bool IsThereBoundaryNear() => FindBoundaries().Length > 0;
 
-            var overlappedBoundColliders = Physics2D.OverlapBoxAll(colliderCenterInWorldSpace,
+        private Collider2D[] FindBoundaries() => PossibleTargets(EnemyShip.LayerMasks.Boundary, 
+                TriggerColliderData.BoundaryCheckCollider.bounds.center,
                 TriggerColliderData.BoundaryCheckColliderExtents,
-                TriggerColliderData.BoundaryCheckCollider.transform.rotation.z,
-                EnemyShip.StateSettings.LayerMasks.Boundary);
-            return overlappedBoundColliders;
-        }
+                TriggerColliderData.BoundaryCheckCollider.transform.rotation.z);
 
-        protected void Move(Vector2 direction)
+        private Collider2D[] FindAsteroids() => PossibleTargets(EnemyShip.LayerMasks.Asteroid,
+                TriggerColliderData.AsteroidCheckCollider.bounds.center,
+                TriggerColliderData.AsteroidCheckColliderExtents,
+                TriggerColliderData.AsteroidCheckCollider.transform.rotation.z);
+        protected bool IsThereAsteroidNear() => FindAsteroids().Length > 0;
+        
+        private void AvoidAsteroid()
         {
-            EnemyShip.Rigidbody2D.AddForce(direction * MovingStateSettings.MovementSpeed);
+            if (BaseEnemyStateMachine.EnemyStateReusableData.AsteroidLastMoveDirection.x < 0)
+            {
+                Move(EnemyShip.Rigidbody2D.transform.right);
+            }
+            else
+            {
+                Move(-EnemyShip.Rigidbody2D.transform.right);
+            }
+
+            if (BaseEnemyStateMachine.EnemyStateReusableData.AsteroidLastMoveDirection.y < 0)
+            {
+                Move(EnemyShip.Rigidbody2D.transform.up);
+            }
+            else
+            {
+                Move(-EnemyShip.Rigidbody2D.transform.up);
+            }
         }
         
-        protected void ResetVelocity()
+        protected void RotateTowardsTargetPosition(Transform target)
         {
-            EnemyShip.Rigidbody2D.velocity = Vector2.zero;
-        }
-        
-        protected float GetViewAngle(Transform user, Transform target)
-        {
-            Vector3 targetDirection = target.position - user.position;
+            if(target == null) return;
+            
+            Vector3 position = EnemyShip.Rigidbody2D.transform.position;
+            Vector3 targetPosition = target.transform.position;
 
-            float viewableAngle = Vector3.SignedAngle(targetDirection, user.forward, Vector3.up);
-            return viewableAngle;
+            float angle = Mathf.Atan2(target.position.y - position.y, targetPosition.x - position.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+            EnemyShip.Rigidbody2D.transform.rotation = Quaternion.RotateTowards(EnemyShip.Rigidbody2D.transform.rotation,
+                targetRotation, _movingStateSettings.RotationSpeed * Time.deltaTime);
         }
     }
 }

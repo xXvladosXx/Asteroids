@@ -10,7 +10,6 @@ namespace Installers
 {
     public class HealthControllerInstaller : MonoInstaller
     {
-        [SerializeField] private PlayerEntity _playerEntity;
         [SerializeField] private HealthUI _healthUI;
 
         public override void InstallBindings()

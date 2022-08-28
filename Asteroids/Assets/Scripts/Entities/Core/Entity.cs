@@ -12,13 +12,12 @@ namespace Entities.Core
         [field: SerializeField] public Heath Heath { get; protected set; }
         [field: SerializeField] public StatsData StatsData { get; private set; }
         
-        public void Construct()
+        public virtual void Construct()
         {
             Heath = new Heath(StatsData.GetStat(Stats.Health));
-            print(Heath.MaxValue);
         }
         
-        public abstract void Die();
+        public abstract void Die(IAttackApplier attackApplier);
         protected virtual void Awake() { }
         public void Initialize()
         {

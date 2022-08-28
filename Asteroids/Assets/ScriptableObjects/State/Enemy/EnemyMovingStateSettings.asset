@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MovementSpeed>k__BackingField: 2
   <StoppingDistanceToPlayer>k__BackingField: 3
+  <RotationSpeed>k__BackingField: 150

@@ -1,4 +1,5 @@
-﻿using AudioSystem;
+﻿using System;
+using AudioSystem;
 using Combat.Core;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
@@ -34,18 +35,26 @@ namespace Combat
             var bullet = ProjectilePool.Instance.GetPrefab();
             AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
-            _missleObject.transform.position = hitData.DamageApplier.position;
-            _missleObject.transform.rotation = hitData.DamageApplier.rotation;
+            var position = hitData.AttackApplier.User.position;
+            var rotation = hitData.AttackApplier.User.rotation;
+
+            _missleObject.transform.position = position;
+            _missleObject.transform.rotation = rotation;
             _missleObject.Play();
             
-            bullet.transform.position = hitData.DamageApplier.position;
-            bullet.transform.rotation = hitData.DamageApplier.rotation;
+            bullet.transform.position = position;
+            bullet.transform.rotation = rotation;
             bullet.ApplyAttack(hitData);    
             
             this.CallWithDelay(ResetShot, _objectPicker.CurrentProjectile.ProjectileData.TimeBetweenShooting);
         }
 
         private void ResetShot()
+        {
+            _readyToAttack = true;
+        }
+
+        private void OnEnable()
         {
             _readyToAttack = true;
         }

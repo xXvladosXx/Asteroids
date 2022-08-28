@@ -1,4 +1,5 @@
 ﻿using System;
+using Combat.Core;
 using Entities;
 using UI.Core;
 using UI.GameOver;
@@ -20,12 +21,17 @@ namespace UI.UIControllers
         {
             base.Init(uiData);
 
-            _player.OnDied += SwitchUIElement<GameOverUI>;
+            _player.OnDied += ChangeGameOverScreen;
+        }
+
+        private void ChangeGameOverScreen(IAttackApplier attackApplier)
+        {
+            SwitchUIElement<GameOverUI>();
         }
 
         protected override void OnDisable()
         {
-            _player.OnDied -= SwitchUIElement<GameOverUI>;
+            _player.OnDied -= ChangeGameOverScreen;
         }
     }
 }

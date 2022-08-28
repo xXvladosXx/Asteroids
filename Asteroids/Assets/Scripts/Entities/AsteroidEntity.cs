@@ -27,7 +27,7 @@ namespace Entities
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        public override void Die()
+        public override void Die(IAttackApplier attackApplier)
         {
             var explosion = ExplosionPool.Instance.GetPrefab();
             explosion.transform.position = transform.position;
@@ -38,7 +38,7 @@ namespace Entities
 
         public void ReceiveDamage(HitData hitData)
         {
-            Die();
+            Die(hitData.AttackApplier);
         }
         
         private void Start()
@@ -79,13 +79,5 @@ namespace Entities
             return possibleSpeed;
         }
 
-        public void ApplyAttack(IDamageReceiver damageReceiver)
-        {
-            damageReceiver.ReceiveDamage(new HitData
-            {
-                Damage = StatsData.GetStat(Stats.Damage)
-            });
-            
-        }
     }
 }
