@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Data.EnemyShip
+namespace Data.EnemyShip.StatesSettings
 {
     [CreateAssetMenu(menuName = ("State/MovingStateSettings"))]
     public class MovingStateSettings : ScriptableObject

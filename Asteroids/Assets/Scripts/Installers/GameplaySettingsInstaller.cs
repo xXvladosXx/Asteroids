@@ -1,4 +1,5 @@
-using EnemyShipZenject;
+using AsteroidsZenject.AsteroidZenject;
+using AsteroidsZenject.EnemyShipZenject;
 using Spawners;
 using UnityEngine;
 using Zenject;

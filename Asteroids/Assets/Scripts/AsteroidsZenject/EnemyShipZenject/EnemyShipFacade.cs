@@ -1,12 +1,10 @@
 using System;
-using Combat.Core;
-using EnemiesZenject;
 using Entities;
 using Entities.Core;
 using UnityEngine;
 using Zenject;
 
-namespace EnemyShipZenject
+namespace AsteroidsZenject.EnemyShipZenject
 {
     public class EnemyShipFacade : MonoBehaviour, IPoolable<Vector3, IMemoryPool>,
         IDisposable, IEnemy

@@ -1,13 +1,11 @@
 using Combat.Core;
 using Data.EnemyShip;
-using EnemyShipZenject;
-using Entities.Core;
-using Pathfinding;
-using StateMachine.Core;
+using Data.EnemyShip.StatesSettings;
+using Entities;
 using StatsSystem.Core;
 using UnityEngine;
 
-namespace StateMachine.Enemy.BaseStates
+namespace StateMachine.Enemy.States
 {
     public class AIAttackState : AIBaseState
     {
@@ -15,7 +13,7 @@ namespace StateMachine.Enemy.BaseStates
         
         public AIAttackState(EnemyShip enemyShip, BaseEnemyStateMachine baseEnemyStateMachine) : base(enemyShip, baseEnemyStateMachine)
         {
-            _attackStateSettings = EnemyShip.StateSettings.AttackStateSettings;
+            _attackStateSettings = EnemyShip.EnemyShipData.StateSettings.AttackStateSettings;
         }
 
         public override void Enter()

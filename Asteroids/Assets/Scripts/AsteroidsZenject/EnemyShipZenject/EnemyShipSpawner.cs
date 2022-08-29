@@ -1,13 +1,11 @@
 using System;
-using AsteroidZenject;
-using EnemiesZenject;
 using Entities;
 using Spawners.Core;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace EnemyShipZenject
+namespace AsteroidsZenject.EnemyShipZenject
 {
     public class EnemyShipSpawner : EntitySpawner, IInitializable, IDisposable, ITickable
     {
@@ -18,6 +16,10 @@ namespace EnemyShipZenject
         private SignalBus _signalBus;
         private Settings _settings;
 
+        private float _desiredNumEnemies;
+        private int _enemyCount;
+        private float _lastSpawnTime;
+        
         public EnemyShipSpawner(EnemyShipRegistry enemyShipRegistry,
             EnemyShipFacade.Factory enemyShipFactory, 
             PlayerEntity playerEntity,
@@ -39,6 +41,15 @@ namespace EnemyShipZenject
             {
                 Spawn();
             }
+            
+            _desiredNumEnemies += _settings.NumEnemiesIncreaseRate * Time.deltaTime;
+
+            if (_enemyCount < (int) _desiredNumEnemies
+                && Time.realtimeSinceStartup - _lastSpawnTime > _settings.MinDelayBetweenSpawns)
+            {
+                Spawn();
+                _enemyCount++;
+            }
         }
         
         public override void Spawn()
@@ -57,6 +68,8 @@ namespace EnemyShipZenject
 
             _enemyShipRegistry.AddEnemy(enemy);
             enemy.OnEntityDestroyed += _enemyShipRegistry.RemoveEnemy;
+            
+            _lastSpawnTime = Time.realtimeSinceStartup;
         }
 
         public void Dispose()
@@ -67,6 +80,9 @@ namespace EnemyShipZenject
         public class Settings
         {
             [field: SerializeField] public Transform[] PointsToSpawn { get; private set; }
+            [field: SerializeField] public float NumEnemiesIncreaseRate { get; private set; }
+            [field: SerializeField] public float NumEnemiesStartAmount { get; private set; }
+            [field: SerializeField] public float MinDelayBetweenSpawns { get; private set; } = 5f;
         }
     }
 }

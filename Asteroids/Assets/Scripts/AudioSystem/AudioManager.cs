@@ -5,21 +5,8 @@ namespace AudioSystem
 {
     public class AudioManager : MonoBehaviour
     {
-        public static AudioManager Instance;
-
         [SerializeField] private AudioSource _musicSource, _effectsSource;
         [SerializeField] private AudioClip _startMusic;
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {

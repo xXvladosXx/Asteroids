@@ -1,7 +1,6 @@
-using Combat.Core;
 using UnityEngine;
 
-namespace StateMachine.Enemy.BaseStates
+namespace StateMachine.Enemy.States
 {
     public interface ITargetFinder
     {

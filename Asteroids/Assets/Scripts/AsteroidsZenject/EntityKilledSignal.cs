@@ -1,7 +1,7 @@
 using Combat.Core;
 using Entities.Core;
 
-namespace AsteroidsZenject.EnemyShipZenject
+namespace AsteroidsZenject
 {
     public class EntityKilledSignal
     {

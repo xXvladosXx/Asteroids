@@ -1,18 +1,8 @@
-using System;
-using AsteroidZenject;
 using AudioSystem;
-using Combat;
 using Combat.Core;
-using Combat.Projectiles;
-using Combat.Projectiles.Core;
 using Data.Asteroid;
 using Entities.Core;
-using ObjectPoolers;
-using Spawners.Core;
-using StatsSystem.Core;
 using UnityEngine;
-using Utilities.Extensions;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Entities
@@ -29,7 +19,6 @@ namespace Entities
 
         public override void Die(IAttackApplier attackApplier)
         {
-            AudioManager.Instance.PlayEffectSound(AsteroidData.AudioClip);
         }
 
         public void ReceiveDamage(HitData hitData)

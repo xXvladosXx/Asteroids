@@ -1,17 +1,10 @@
 ﻿using System;
-using AsteroidsZenject.EnemyShipZenject;
-using AsteroidZenject;
-using Data.Score;
-using EnemiesZenject;
-using Entities;
-using ObjectPoolers;
 using Spawners.Core;
 using UnityEngine;
 using Zenject;
-using Zenject.Asteroids;
 using Random = UnityEngine.Random;
 
-namespace Spawners
+namespace AsteroidsZenject.AsteroidZenject
 {
     public class AsteroidSpawner : EntitySpawner, IInitializable, ITickable
     {
@@ -20,9 +13,9 @@ namespace Spawners
         private readonly SignalBus _signalBus;
         private readonly Settings _settings;
 
-        float _desiredNumEnemies;
-        int _enemyCount;
-        float _lastSpawnTime;
+        private float _desiredNumEnemies;
+        private int _enemyCount;
+        private float _lastSpawnTime;
 
         public AsteroidSpawner(AsteroidFacade.Factory factory,
             SignalBus signalBus,
@@ -83,20 +76,20 @@ namespace Spawners
                 Vector3 spawnDirection = Random.insideUnitCircle.normalized * _settings.SpawnDistance;
                 float variance = Random.Range(-_settings.DirectionVariance, _settings.DirectionVariance);
                 Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
-                
+
                 var firstSplit = _asteroidFactory.Create(_settings.AsteroidLifetime, rotation * -spawnDirection);
                 asteroidFacade.AsteroidEntity.CreateSplit(firstSplit.AsteroidEntity);
-                
+
                 _asteroidRegistry.AddEnemy(firstSplit);
                 firstSplit.OnEntityDestroyed += OnAsteroidDestroyed;
-                
+
                 var secondSplit = _asteroidFactory.Create(_settings.AsteroidLifetime, rotation * spawnDirection);
                 asteroidFacade.AsteroidEntity.CreateSplit(secondSplit.AsteroidEntity);
-                
+
                 _asteroidRegistry.AddEnemy(secondSplit);
                 secondSplit.OnEntityDestroyed += OnAsteroidDestroyed;
             }
-            
+
             asteroidFacade.OnEntityDestroyed -= OnAsteroidDestroyed;
 
             _asteroidRegistry.RemoveEnemy(asteroidFacade);

@@ -1,13 +1,12 @@
 using Controllers;
-using EnemyShipZenject;
 using Entities;
 using StatsSystem;
 using StatsSystem.Core;
-using UI.Stats;
+using UI.Enemy;
 using UnityEngine;
 using Zenject;
 
-namespace Installers
+namespace AsteroidsZenject.EnemyShipZenject
 {
     public class EnemyShipInstaller : MonoInstaller
     {

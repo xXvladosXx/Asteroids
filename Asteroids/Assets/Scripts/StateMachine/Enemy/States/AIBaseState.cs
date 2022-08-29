@@ -1,11 +1,10 @@
-using Combat.Core;
 using Data.EnemyShip;
-using EnemyShipZenject;
-using Entities.Core;
+using Data.EnemyShip.StatesSettings;
+using Entities;
 using StateMachine.Core;
 using UnityEngine;
 
-namespace StateMachine.Enemy.BaseStates
+namespace StateMachine.Enemy.States
 {
     public abstract class AIBaseState : IState, ITargetFinder
     {
@@ -20,7 +19,7 @@ namespace StateMachine.Enemy.BaseStates
             EnemyShip = enemyShip;
             BaseEnemyStateMachine = baseEnemyStateMachine;
             TriggerColliderData = EnemyShip.EnemyTriggerColliderSettings;
-            _movingStateSettings = EnemyShip.StateSettings.MovingStateSettings;
+            _movingStateSettings = EnemyShip.EnemyShipData.StateSettings.MovingStateSettings;
         }
 
         public virtual void Enter()
@@ -109,7 +108,7 @@ namespace StateMachine.Enemy.BaseStates
         private bool IsTherePlayerNear()
         {
             return !(Vector3.Distance(EnemyShip.Target.transform.position, EnemyShip.transform.position) >
-                     EnemyShip.StateSettings.MovingStateSettings.StoppingDistanceToPlayer);
+                     EnemyShip.EnemyShipData.StateSettings.MovingStateSettings.StoppingDistanceToPlayer);
         }
         
         private bool IsThereBoundaryNear() => FindBoundaries().Length > 0;

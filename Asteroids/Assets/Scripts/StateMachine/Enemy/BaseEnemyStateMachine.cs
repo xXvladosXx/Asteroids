@@ -1,7 +1,7 @@
 using Data.EnemyShip;
-using EnemyShipZenject;
+using Entities;
 using Entities.Core;
-using StateMachine.Enemy.BaseStates;
+using StateMachine.Enemy.States;
 
 namespace StateMachine.Enemy
 {

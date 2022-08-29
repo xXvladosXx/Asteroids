@@ -4,27 +4,29 @@ using Combat.Core;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Interaction;
-using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
 using Zenject;
 
 namespace Combat
 {
-    public class AttackMaker : MonoBehaviour
+    public class AttackHandler : MonoBehaviour
     {
         [SerializeField] private ParticleSystem _misslePrefab;
         
         private ObjectPicker _objectPicker;
         private ParticleSystem _missleObject;
         private OrdinaryProjectile.Factory _projectileFactory;
+        private AudioManager _audioManager;
         
         private bool _readyToAttack = true;
 
         [Inject]
-        public void Construct(OrdinaryProjectile.Factory projectileFactory)
+        public void Construct(OrdinaryProjectile.Factory projectileFactory,
+            AudioManager audioManager)
         {
             _projectileFactory = projectileFactory;
+            _audioManager = audioManager;
         }
         
         public void Init(ObjectPicker objectPicker)
@@ -40,7 +42,7 @@ namespace Combat
         {
             _readyToAttack = false;
             var bullet = _projectileFactory.Create();
-            AudioManager.Instance.PlayEffectSound(bullet.ProjectileData.AudioClip);
+            _audioManager.PlayEffectSound(bullet.ProjectileData.AudioClip);
 
             var position = hitData.AttackApplier.User.position;
             var rotation = hitData.AttackApplier.User.rotation;

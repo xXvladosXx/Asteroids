@@ -1,7 +1,6 @@
 using System;
 using Combat.Core;
 using Core;
-using EnemiesZenject;
 using Entities;
 using Entities.Core;
 using StatsSystem.Core;
@@ -9,7 +8,7 @@ using UnityEngine;
 using Utilities.Extensions;
 using Zenject;
 
-namespace AsteroidZenject
+namespace AsteroidsZenject.AsteroidZenject
 {
     public class AsteroidFacade : MonoBehaviour, IPoolable<float, Vector3, IMemoryPool>,
         IDisposable, IDamageReceiver, IEnemy, IAttackApplier
@@ -65,7 +64,7 @@ namespace AsteroidZenject
 
         public void Dispose()
         {
-            _pool.Despawn(this);
+            _pool?.Despawn(this);
         }
 
         public void ApplyAttack(HitData hitData, IDamageReceiver damageReceiver)
@@ -84,7 +83,7 @@ namespace AsteroidZenject
             {
                 ApplyAttack(new HitData
                 {
-                    Damage = AsteroidEntity.StatsData.GetStat(Stats.Damage)
+                    Damage = AsteroidEntity.StatsData.GetStat(Stats.Damage) * AsteroidEntity.Size
                 }, hurtable);
                 
                 Die(this);

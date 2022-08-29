@@ -1,4 +1,5 @@
 using System;
+using Camera;
 using Combat;
 using Combat.Core;
 using Core;
@@ -22,6 +23,7 @@ namespace Entities
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
         private PlayerInput _playerInput;
+        private CameraShaker _cameraShaker;
         
         private bool _moving;
         private float _movementDirection;
@@ -30,18 +32,30 @@ namespace Entities
 
         [Inject]
         public void Construct(PlayerInput playerInput,
-            Heath heath)
+            Heath heath, CameraShaker cameraShaker)
         {
             Heath = heath;
             _playerInput = playerInput;
+            _cameraShaker = cameraShaker;
         }
         
         public override void Die(IAttackApplier attackApplier)
         {
-            Destroy(gameObject);   
+            gameObject.SetActive(false);
+            
+            _cameraShaker.StartShaking(_cameraShaker.CameraShakerData.PlayerDeathTime, 
+                _cameraShaker.CameraShakerData.PlayerDeathMagnitude);
+            
             OnDied?.Invoke(attackApplier);
         }
-        
+
+        public override void ReceiveDamage(HitData hitData)
+        {
+            base.ReceiveDamage(hitData);
+            _cameraShaker.StartShaking(_cameraShaker.CameraShakerData.PlayerDamageTime, 
+                _cameraShaker.CameraShakerData.PlayerDamageMagnitude);
+        }
+
         private void Update()
         {
             ReadMovement();
@@ -99,6 +113,5 @@ namespace Entities
                 ObjectPicker.PickupObject(pickableObject);
             }
         }
-
     }
 }

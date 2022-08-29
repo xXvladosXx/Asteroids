@@ -1,5 +1,4 @@
 using System;
-using AsteroidZenject;
 using Combat.Core;
 using Combat.Projectiles.Modifiers;
 using Core;

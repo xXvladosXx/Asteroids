@@ -1,4 +1,3 @@
-using EnemyShipZenject;
 using TMPro;
 using UI.Core;
 using UI.Score;

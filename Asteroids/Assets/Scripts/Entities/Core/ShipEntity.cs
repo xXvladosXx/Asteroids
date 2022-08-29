@@ -2,7 +2,6 @@
 using Combat;
 using Combat.Core;
 using Core;
-using EnemiesZenject;
 using Interaction;
 using StatsSystem;
 using StatsSystem.Core;
@@ -10,12 +9,12 @@ using UnityEngine;
 
 namespace Entities.Core
 {
-    [RequireComponent(typeof(AttackMaker))]
+    [RequireComponent(typeof(AttackHandler))]
     public abstract class ShipEntity : Entity, IAttackApplier, IDamageReceiver, IScoreCollector
     {
         [field: SerializeField] public ObjectPicker ObjectPicker { get; private set; }
 
-        [SerializeField] protected AttackMaker AttackMaker;
+        [SerializeField] protected AttackHandler attackHandler;
         public Transform User => transform;
         public IScoreCollector ScoreCollector => this;
 
@@ -25,7 +24,7 @@ namespace Entities.Core
 
         protected override void Awake()
         {
-            AttackMaker.Init(ObjectPicker);
+            attackHandler.Init(ObjectPicker);
 
             OnAwake();
         }
@@ -36,11 +35,11 @@ namespace Entities.Core
 
         public void ApplyAttack(HitData hitData, IDamageReceiver damageReceiver)
         {
-            if (AttackMaker.CanMakeFire())
-                AttackMaker.Fire(hitData);
+            if (attackHandler.CanMakeFire())
+                attackHandler.Fire(hitData);
         }
         
-        public void ReceiveDamage(HitData hitData)
+        public virtual void ReceiveDamage(HitData hitData)
         {
             Heath.DecreaseHealth(hitData);
         }

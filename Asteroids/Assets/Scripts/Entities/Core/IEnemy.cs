@@ -1,5 +1,4 @@
 using System;
-using EnemiesZenject;
 
 namespace Entities.Core
 {
