@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Data.EnemyShip
+namespace Data.EnemyShip.StatesSettings
 {
     [Serializable]
     public class StateSettings

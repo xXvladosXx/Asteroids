@@ -1,9 +1,7 @@
-using EnemyShipZenject;
-using Entities.Core;
-using StateMachine.Core;
+using Entities;
 using UnityEngine;
 
-namespace StateMachine.Enemy.BaseStates
+namespace StateMachine.Enemy.States
 {
     public class AIIdleState: AIBaseState
     {

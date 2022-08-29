@@ -1,26 +1,27 @@
 using System;
-using AsteroidsZenject.EnemyShipZenject;
 using AsteroidsZenject.ExplosionZenject;
+using AudioSystem;
 using Combat.Core;
-using EnemyShipZenject;
-using UnityEngine;
 using Zenject;
 
-namespace EnemiesZenject.EnemyShipZenject
+namespace AsteroidsZenject.EnemyShipZenject
 {
     public class EnemyShipDeathHandler : IInitializable, IDisposable
     {
         private readonly EnemyShipFacade _enemyShipFacade;
         private readonly SignalBus _signalBus;
         private readonly EnemyExplosion.Factory _explosionFactory;
+        private readonly AudioManager _audioManager;
 
         public EnemyShipDeathHandler(EnemyShipFacade enemyShipFacade,
             SignalBus signalBus,
-            EnemyExplosion.Factory explosionFactory)
+            EnemyExplosion.Factory explosionFactory,
+            AudioManager audioManager)
         {
             _enemyShipFacade = enemyShipFacade;
             _signalBus = signalBus;
             _explosionFactory = explosionFactory;
+            _audioManager = audioManager;
         }
         
         public void Initialize()
@@ -35,6 +36,7 @@ namespace EnemiesZenject.EnemyShipZenject
             
             _signalBus.Fire(new EntityKilledSignal(_enemyShipFacade.EnemyShip, attackApplier));
             
+            _audioManager.PlayEffectSound(_enemyShipFacade.EnemyShip.EnemyShipData.AudioClip);
             _enemyShipFacade.Dispose();
         }
 

@@ -1,5 +1,5 @@
 using System;
-using EnemyShipZenject;
+using Entities;
 using UI.Stats;
 using Zenject;
 

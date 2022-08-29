@@ -1,4 +1,5 @@
 ﻿using System;
+using AsteroidsZenject.AsteroidZenject;
 using AudioSystem;
 using Camera;
 using Combat.Core;
@@ -23,18 +24,18 @@ namespace Core.Games
         
         private PlayerEntity _player;
         private UIController _uiController;
-        private AsteroidSpawner _asteroidSpawner;
         private ScoreCounter _scoreCounter;
+        private AudioManager _audioManager;
 
         [Inject]
         private void Construct(PlayerEntity playerEntity, 
             UIController uiController, AsteroidSpawner asteroidSpawner, 
-            ScoreCounter scoreCounter)
+            ScoreCounter scoreCounter, AudioManager audioManager)
         {
             _player = playerEntity;
             _uiController = uiController;
-            _asteroidSpawner = asteroidSpawner;
             _scoreCounter = scoreCounter;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
@@ -54,8 +55,8 @@ namespace Core.Games
         {
             var settingsData = _saveSystem.LoadSettings();
             
-            AudioManager.Instance.ChangeEffectsSound(settingsData.EffectsVolume);
-            AudioManager.Instance.ChangeMusicSound(settingsData.MusicVolume);
+            _audioManager.ChangeEffectsSound(settingsData.EffectsVolume);
+            _audioManager.ChangeMusicSound(settingsData.MusicVolume);
         }
 
         private void OnEnable()
@@ -66,7 +67,6 @@ namespace Core.Games
 
         private void StartCameraShaking(IAttackApplier attackApplier)
         {
-            CameraShaker.Instance.StartShaking(CameraShakerData.Time, CameraShakerData.Magnitude);
         }
 
         private void ReloadLevel()

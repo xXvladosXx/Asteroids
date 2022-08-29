@@ -1,24 +1,20 @@
 using System;
 using Combat.Core;
-using Core;
 using Data.EnemyShip;
-using Entities;
 using Entities.Core;
-using Pathfinding;
 using StateMachine.Enemy.OrdinaryShip;
+using UI.Enemy;
 using UnityEngine;
-using UnityEngine.AI;
-using Zenject;
 
-namespace EnemyShipZenject
+namespace Entities
 {
     public class EnemyShip : ShipEntity
     {
-        [field: SerializeField] public StateSettings StateSettings { get; private set; }
         [field: SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
         [field: SerializeField] public EnemyTriggerColliderSettings EnemyTriggerColliderSettings { get; private set; }
         [field: SerializeField] public LayerMasks LayerMasks { get; private set; }
         [field: SerializeField] public HealthBar HealthBar { get; private set; }
+        [field: SerializeField] public EnemyShipData EnemyShipData { get; private set; }
 
         public Transform Target { get; set; }
         

@@ -1,13 +1,9 @@
 using System;
-using AsteroidsZenject.EnemyShipZenject;
-using AsteroidZenject;
+using AsteroidsZenject;
 using Combat.Core;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Core;
-using EnemiesZenject;
-using EnemiesZenject.EnemyShipZenject;
-using EnemyShipZenject;
 using Entities;
 using Entities.Core;
 using UI.Score;

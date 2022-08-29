@@ -1,7 +1,6 @@
 ﻿using System;
 using Combat.Core;
 using Combat.Projectiles.Core;
-using ObjectPoolers;
 using UnityEngine;
 using Utilities.Extensions;
 using Zenject;
@@ -20,7 +19,7 @@ namespace Combat.Projectiles
 
         protected override void ReleaseProjectile()
         {
-            Pool.Despawn(this);
+            Pool?.Despawn(this);
         }
 
         public void OnSpawned(IMemoryPool pool)

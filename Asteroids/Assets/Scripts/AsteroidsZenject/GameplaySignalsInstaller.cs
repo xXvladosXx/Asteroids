@@ -1,9 +1,6 @@
-using AsteroidsZenject.EnemyShipZenject;
-using EnemiesZenject.EnemyShipZenject;
-using UnityEngine;
 using Zenject;
 
-namespace AsteroidZenject
+namespace AsteroidsZenject
 {
     public class GameplaySignalsInstaller : Installer<GameplaySignalsInstaller>
     {

@@ -2,7 +2,7 @@ using UI.Enemy;
 using UnityEngine;
 using Zenject;
 
-namespace EnemiesZenject
+namespace AsteroidsZenject
 {
     public class EnemiesUIInstaller : MonoInstaller
     {

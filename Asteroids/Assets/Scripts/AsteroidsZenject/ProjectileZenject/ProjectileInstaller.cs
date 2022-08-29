@@ -2,7 +2,7 @@ using Combat.Projectiles;
 using UnityEngine;
 using Zenject;
 
-namespace Installers
+namespace AsteroidsZenject.ProjectileZenject
 {
     public class ProjectileInstaller : MonoInstaller
     {

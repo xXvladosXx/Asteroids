@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data.EnemyShip
+namespace Data.EnemyShip.StatesSettings
 {
     [CreateAssetMenu(menuName = ("State/AttackStateSettings"))]
     public class AttackStateSettings : ScriptableObject

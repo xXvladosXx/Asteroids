@@ -1,11 +1,10 @@
 using System;
-using AsteroidZenject;
+using AsteroidsZenject;
+using AsteroidsZenject.AsteroidZenject;
+using AsteroidsZenject.EnemyShipZenject;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Controllers;
-using EnemiesZenject;
-using EnemiesZenject.EnemyShipZenject;
-using EnemyShipZenject;
 using Entities;
 using Entities.Core;
 using Spawners;

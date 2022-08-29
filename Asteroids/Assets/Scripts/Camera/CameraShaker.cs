@@ -1,25 +1,17 @@
 ﻿using System.Collections;
+using Data.Camera;
 using UnityEngine;
 
 namespace Camera
 {
     public class CameraShaker : MonoBehaviour
     {
-        public static CameraShaker Instance { get; private set; }
+        [field: SerializeField] public CameraShakerData CameraShakerData { get; private set; }
 
         private UnityEngine.Camera _camera;
         private void Awake()
         {
             _camera = UnityEngine.Camera.main;
-
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
 
         public void StartShaking(float duration, float magnitude)

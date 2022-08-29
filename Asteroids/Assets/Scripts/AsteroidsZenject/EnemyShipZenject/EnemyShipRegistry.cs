@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using EnemyShipZenject;
-using UnityEngine;
 
-namespace EnemiesZenject
+namespace AsteroidsZenject.EnemyShipZenject
 {
     public class EnemyShipRegistry
     {

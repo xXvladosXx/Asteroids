@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using AsteroidsZenject.EnemyShipZenject;
 using Combat.Core;
 using Core;
-using EnemiesZenject;
-using EnemyShipZenject;
+using Entities;
 using UI.Enemy;
 using UnityEngine;
 using Zenject;

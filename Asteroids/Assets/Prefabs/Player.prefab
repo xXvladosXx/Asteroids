@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf57338ee1dd18489f67da51da6604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StatsData>k__BackingField: {fileID: 11400000, guid: 4594ca86b9a362e49906250e77a2df61, type: 2}
   <ObjectPicker>k__BackingField:
     <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
     <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
+  attackHandler: {fileID: 9183643171735864551}
   <PlayerSettings>k__BackingField:
     <MovementSpeed>k__BackingField: 2
     <RotationSpeed>k__BackingField: 1

@@ -1,4 +1,4 @@
-using EnemyShipZenject;
+using Entities;
 
 namespace StateMachine.Enemy.OrdinaryShip
 {

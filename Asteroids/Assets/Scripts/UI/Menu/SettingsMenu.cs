@@ -10,6 +10,7 @@ using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Utilities.Extensions;
+using Zenject;
 
 namespace UI.Menu
 {
@@ -24,7 +25,14 @@ namespace UI.Menu
         private int _screenInt;
 
         private SaveSystem _saveSystem;
+        private AudioManager _audioManager;
 
+        [Inject]
+        public void Construct(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
+        
         public override void Init(UIData uiData)
         {
             base.Init(uiData);
@@ -36,12 +44,12 @@ namespace UI.Menu
 
         public void SetEffectsVolume(float volume)
         {
-            AudioManager.Instance.ChangeEffectsSound(volume);
+            _audioManager.ChangeEffectsSound(volume);
         }
 
         public void SetMusicVolume(float volume)
         {
-            AudioManager.Instance.ChangeMusicSound(volume);
+            _audioManager.ChangeMusicSound(volume);
         }
 
         public void SaveSettings()
