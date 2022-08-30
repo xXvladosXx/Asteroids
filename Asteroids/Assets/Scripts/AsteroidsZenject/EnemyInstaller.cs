@@ -7,6 +7,7 @@ using Combat.Projectiles.Core;
 using Controllers;
 using Entities;
 using Entities.Core;
+using Interaction;
 using Spawners;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,7 @@ namespace Installers
     {
         [SerializeField] private AsteroidEntity _asteroidEntity;
         [SerializeField] private EnemyShip _enemyShip;
+        [SerializeField] private ObjectPicker _objectPicker;
 
         public override void InstallBindings()
         {            
@@ -37,6 +39,8 @@ namespace Installers
                     .FromSubContainerResolve()
                     .ByNewPrefabMethod(_enemyShip, InstallEnemyShip)
                     .UnderTransformGroup("Enemy Ships"));
+            Container.Bind<ObjectPicker>().FromSubContainerResolve().ByMethod(InstallEnemyShip).AsSingle();
+
             Container.Bind<EnemyShipRegistry>().AsSingle();
         }
 
@@ -63,6 +67,7 @@ namespace Installers
             subContainer.Bind<EnemyShipFacade>().FromNewComponentOnRoot().AsSingle();
             subContainer.Bind<EnemyShip>().FromComponentOnRoot().AsSingle();
             subContainer.BindInterfacesAndSelfTo<EnemyShipDeathHandler>().AsSingle();
+            subContainer.Bind<ObjectPicker>().FromInstance(_objectPicker).AsSingle();
         }
 
         class AsteroidFacadePool : MonoPoolableMemoryPool<float, Vector3, IMemoryPool, AsteroidFacade>

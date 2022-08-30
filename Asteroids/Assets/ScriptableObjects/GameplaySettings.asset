@@ -21,10 +21,10 @@ MonoBehaviour:
     <AsteroidLifetime>k__BackingField: 12
   <EnemyShipSpawnerInstaller>k__BackingField:
     <PointsToSpawn>k__BackingField:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {x: 8, y: 4, z: 0}
+    - {x: -8, y: 4, z: 0}
+    - {x: 8, y: -4, z: 0}
+    - {x: -8, y: -4, z: 0}
     <NumEnemiesIncreaseRate>k__BackingField: 1
     <NumEnemiesStartAmount>k__BackingField: 1
     <MinDelayBetweenSpawns>k__BackingField: 10

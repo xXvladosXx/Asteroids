@@ -9,10 +9,11 @@ namespace Combat.Projectiles
 {
     public class OrdinaryProjectile : Projectile, IPoolable<IMemoryPool>
     {
-        public override void ApplyAttack(HitData hitData)
+        public override void ApplyAttack(HitData hitData, ProjectileModifiersData projectileModifiersData)
         {
-            base.ApplyAttack(hitData);
-            Rigidbody2D.AddForce(hitData.AttackApplier.User.up * ProjectileData.ProjectileSpeed);
+            base.ApplyAttack(hitData, projectileModifiersData);
+            Rigidbody2D.AddForce(hitData.AttackApplier.User.up *
+                                 (ProjectileData.ProjectileSpeed + projectileModifiersData.AdditionalSpeed));
 
             this.CallWithDelay(ReleaseProjectile, ProjectileData.MaxLifeTime);
         }

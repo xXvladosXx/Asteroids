@@ -1,4 +1,5 @@
 using System;
+using BonusesSystem;
 using Camera;
 using Combat;
 using Combat.Core;
@@ -17,26 +18,32 @@ namespace Entities
 {
     [RequireComponent(typeof(PlayerInput),
         typeof(Rigidbody2D))]
-    public class PlayerEntity : ShipEntity
+    public class PlayerEntity : ShipEntity, IBonusUser
     {
         [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [SerializeField] private Rigidbody2D _rigidbody2D;
-
+        [SerializeField] private TimeableBonus bonusSo;
+        
         private PlayerInput _playerInput;
         private CameraShaker _cameraShaker;
-        
+        public BonusHandler BonusHandler { get; set; }
+
         private bool _moving;
         private float _movementDirection;
+        public BonusFinder BonusFinder { get; set; }
 
         public override event Action<IAttackApplier> OnDied;
 
         [Inject]
         public void Construct(PlayerInput playerInput,
-            Heath heath, CameraShaker cameraShaker)
+            Heath heath, CameraShaker cameraShaker,
+            BonusHandler bonusHandler)
         {
             Heath = heath;
             _playerInput = playerInput;
             _cameraShaker = cameraShaker;
+            BonusHandler = bonusHandler;
+            ObjectPicker.Init(bonusHandler);
         }
         
         public override void Die(IAttackApplier attackApplier)
@@ -58,16 +65,39 @@ namespace Entities
 
         private void Update()
         {
+            Heath.IncreaseHealth(BonusFinder.GetBonus(Stat.HealthRegeneration));
+            
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                BonusHandler.AddBonus(bonusSo);
+            }
+            
             ReadMovement();
             Rotate();
+            MakeAttack();
+        }
+        private void FixedUpdate()
+        {
+            if (_moving)
+            {
+                _rigidbody2D.AddForce(transform.up * PlayerSettings.MovementSpeed);
+            }
 
+            if (_movementDirection != 0)
+            {
+                _rigidbody2D.AddTorque(_movementDirection * PlayerSettings.RotationSpeed);
+            }
+        }
+        private void MakeAttack()
+        {
             if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
                 ApplyAttack(new HitData
                 {
-                    Damage = StatsData.GetStat(Stats.Damage),
+                    Damage = StatsData.GetStat(Stats.Damage) + BonusFinder.GetBonus(Stat.Damage),
                     Hurtbox = this,
-                    AttackApplier = this
+                    AttackApplier = this,
+                    BonusUser = this
                 }, null);
             }
         }
@@ -93,19 +123,6 @@ namespace Entities
             }
         }
 
-        private void FixedUpdate()
-        {
-            if (_moving)
-            {
-                _rigidbody2D.AddForce(transform.up * PlayerSettings.MovementSpeed);
-            }
-
-            if (_movementDirection != 0)
-            {
-                _rigidbody2D.AddTorque(_movementDirection * PlayerSettings.RotationSpeed);
-            }
-        }
-
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.transform.TryGetComponent(out PickableObject pickableObject))
@@ -113,5 +130,6 @@ namespace Entities
                 ObjectPicker.PickupObject(pickableObject);
             }
         }
+
     }
 }

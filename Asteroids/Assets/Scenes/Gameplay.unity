@@ -1689,6 +1689,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _asteroidEntity: {fileID: 135595536393515953, guid: 83f92b7aed285f24493f01f29ec6a7a3, type: 3}
   _enemyShip: {fileID: 8766433533347891653, guid: 29f43615fa4ac2d418a85d584cc91c8f, type: 3}
+  _objectPicker:
+    <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
+    <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
 --- !u!1 &1347029105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,6 +2050,86 @@ Transform:
   - {fileID: 2035820834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1927009687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1927009690}
+  - component: {fileID: 1927009689}
+  - component: {fileID: 1927009688}
+  m_Layer: 0
+  m_Name: PickableSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1927009688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927009687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84600c3e2a294f618d8816eae8fa628c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <SpawnAmount>k__BackingField: 1
+  <SpawnRate>k__BackingField: 5
+  _collider2D: {fileID: 1927009689}
+  _pickableObjects:
+  - {fileID: 1552024525519859197, guid: 8419bc0cc68dff44bb3f54334278c146, type: 3}
+  - {fileID: 1552024525519859197, guid: 30f621db3e3958d4bb5fd07df068bc4f, type: 3}
+  - {fileID: 1552024525519859197, guid: b1ed77a0957e88b43aaca5b2b741dbf3, type: 3}
+  - {fileID: 1552024525519859197, guid: 542644790574fe1459162b40a04247ee, type: 3}
+  _timeToDestroyWeapon: 8
+--- !u!61 &1927009689
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927009687}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18, y: 10}
+  m_EdgeRadius: 0
+--- !u!4 &1927009690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927009687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1937781830
 GameObject:
@@ -2586,6 +2669,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
+      propertyPath: _bonus
+      value: 
+      objectReference: {fileID: 11400000, guid: fd88c431f617bf640875ff498198b1cd, type: 2}
+    - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
+      propertyPath: bonusSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 41450ee22069bb647aaf09c18a5481bd, type: 2}
+    - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
       propertyPath: AttackMaker
       value: 
       objectReference: {fileID: 307852636819957216}
@@ -2593,6 +2684,10 @@ PrefabInstance:
       propertyPath: <StatsData>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 4594ca86b9a362e49906250e77a2df61, type: 2}
+    - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
+      propertyPath: <AttackHandler>k__BackingField
+      value: 
+      objectReference: {fileID: 307852636819957216}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
 --- !u!114 &307852636819957207 stripped
@@ -2620,6 +2715,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerEntity: {fileID: 1143780698}
   _playerInput: {fileID: 307852636819957207}
+  _objectPicker:
+    <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
+    <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 48431835390b025418d9baf690f7bae3, type: 3}
 --- !u!114 &307852636819957214
 MonoBehaviour:
   m_ObjectHideFlags: 0
