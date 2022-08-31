@@ -15,6 +15,6 @@ namespace InventorySystem.Core
         int GetItemAmount(Type itemType);
         bool TryToAdd(object sender, IContainerItem item);
         void Remove(object sender, Type itemType, int amount = 1);
-        bool HasItem(Type type, out IContainerItem containerItem);
+        bool HasItem(Type type);
     }
 }

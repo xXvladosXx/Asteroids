@@ -43,6 +43,7 @@ namespace Entities
             _playerInput = playerInput;
             _cameraShaker = cameraShaker;
             BonusHandler = bonusHandler;
+            BonusFinder = new BonusFinder(bonusHandler);
             ObjectPicker.Init(bonusHandler);
         }
         

@@ -14,6 +14,12 @@ namespace InventorySystem.Items
         {
             MaxItemsInStack = maxItemsInStack;
         }
+        
+        public Sword(int maxItemsInStack, int amount)
+        {
+            MaxItemsInStack = maxItemsInStack;
+            Amount = amount;    
+        }
 
         public IContainerItem Clone() => new Sword(MaxItemsInStack) {Amount = Amount};
     }

@@ -121,9 +121,9 @@ namespace InventorySystem
         }
 
 
-        public bool HasItem(Type type, out IContainerItem containerItem)
+        public bool HasItem(Type type)
         {
-            containerItem = GetItem(type);
+            var containerItem = GetItem(type);
             return containerItem != null;
         }
         
