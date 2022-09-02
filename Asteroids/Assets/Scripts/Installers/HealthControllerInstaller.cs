@@ -16,7 +16,7 @@ namespace Installers
         {
             Container.Bind<HealthUI>().FromInstance(_healthUI).AsSingle();
             
-            Container.BindInterfacesAndSelfTo<HealthController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerHealthController>().AsSingle();
         }
     }
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c1e966ba63480da422006eaf2d3eb4, type: 3}
+  m_Name: EasyDifficulty
+  m_EditorClassIdentifier: 
+  <AsteroidData>k__BackingField: {fileID: 11400000, guid: a26e6e91cccc3304d80ed7f8d58d7670, type: 2}
+  <PlayerSettingsSo>k__BackingField: {fileID: 11400000, guid: cd04b3cbf9ffdc947a389a4e1a75040e, type: 2}
+  <EnemyShipData>k__BackingField: {fileID: 11400000, guid: 6a5a06dccf159e243a8535b5f952a1f5, type: 2}
+  <AsteroidSpawnerData>k__BackingField: {fileID: 11400000, guid: 92141daec4de61443b08917dddf75ee0, type: 2}
+  <EnemyShipSpawnerData>k__BackingField: {fileID: 11400000, guid: 341379b56dc0e1b4797bc2d952cca903, type: 2}

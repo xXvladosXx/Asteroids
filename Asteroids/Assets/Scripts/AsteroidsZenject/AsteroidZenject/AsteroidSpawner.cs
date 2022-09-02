@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data.Asteroid;
+using Data.Difficulties;
 using Spawners.Core;
 using UnityEngine;
 using Zenject;
@@ -11,7 +14,7 @@ namespace AsteroidsZenject.AsteroidZenject
         private readonly AsteroidRegistry _asteroidRegistry;
         private readonly AsteroidFacade.Factory _asteroidFactory;
         private readonly SignalBus _signalBus;
-        private readonly Settings _settings;
+        private readonly AsteroidSpawnerData _asteroidSpawnerData;
 
         private float _desiredNumEnemies;
         private int _enemyCount;
@@ -19,18 +22,20 @@ namespace AsteroidsZenject.AsteroidZenject
 
         public AsteroidSpawner(AsteroidFacade.Factory factory,
             SignalBus signalBus,
-            Settings settings,
-            AsteroidRegistry asteroidRegistry)
+            AsteroidRegistry asteroidRegistry,
+            AsteroidSpawnerData asteroidSpawnerData)
         {
             _asteroidFactory = factory;
             _signalBus = signalBus;
-            _settings = settings;
             _asteroidRegistry = asteroidRegistry;
+            _asteroidSpawnerData = asteroidSpawnerData;
         }
 
         public void Initialize()
         {
             _signalBus.Subscribe<EntityKilledSignal>(OnAsteroidDestroyed);
+
+            Debug.Log(_asteroidSpawnerData.name);
         }
 
         public void Tick()
@@ -40,10 +45,10 @@ namespace AsteroidsZenject.AsteroidZenject
                 Spawn();
             }
 
-            _desiredNumEnemies += _settings.NumEnemiesIncreaseRate * Time.deltaTime;
+            _desiredNumEnemies += _asteroidSpawnerData.NumEnemiesIncreaseRate * Time.deltaTime;
 
             if (_enemyCount < (int) _desiredNumEnemies
-                && Time.realtimeSinceStartup - _lastSpawnTime > _settings.MinDelayBetweenSpawns)
+                && Time.realtimeSinceStartup - _lastSpawnTime > _asteroidSpawnerData.MinDelayBetweenSpawns)
             {
                 Spawn();
                 _enemyCount++;
@@ -52,13 +57,16 @@ namespace AsteroidsZenject.AsteroidZenject
 
         public override void Spawn()
         {
-            Vector3 spawnDirection = Random.insideUnitCircle.normalized * _settings.SpawnDistance;
+            Vector3 spawnDirection = Random.insideUnitCircle.normalized * _asteroidSpawnerData.SpawnDistance;
             Vector3 spawnPoint = Vector3.zero + spawnDirection;
 
-            float variance = Random.Range(-_settings.DirectionVariance, _settings.DirectionVariance);
+            float variance = Random.Range(-_asteroidSpawnerData.DirectionVariance,
+                _asteroidSpawnerData.DirectionVariance);
+
             Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
 
-            var asteroid = _asteroidFactory.Create(_settings.AsteroidLifetime, rotation * -spawnDirection);
+            var asteroid = _asteroidFactory.Create(_asteroidSpawnerData.AsteroidLifetime,
+                rotation * -spawnDirection);
 
             _asteroidRegistry.AddEnemy(asteroid);
             asteroid.OnEntityDestroyed += OnAsteroidDestroyed;
@@ -73,17 +81,22 @@ namespace AsteroidsZenject.AsteroidZenject
         {
             if (asteroidFacade.AsteroidEntity.Size > asteroidFacade.AsteroidEntity.AsteroidData.SizeToSplit)
             {
-                Vector3 spawnDirection = Random.insideUnitCircle.normalized * _settings.SpawnDistance;
-                float variance = Random.Range(-_settings.DirectionVariance, _settings.DirectionVariance);
+                Vector3 spawnDirection = Random.insideUnitCircle.normalized * _asteroidSpawnerData.SpawnDistance;
+
+                float variance = Random.Range(-_asteroidSpawnerData.DirectionVariance,
+                    _asteroidSpawnerData.DirectionVariance);
+
                 Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
 
-                var firstSplit = _asteroidFactory.Create(_settings.AsteroidLifetime, rotation * -spawnDirection);
+                var firstSplit = _asteroidFactory.Create(_asteroidSpawnerData.AsteroidLifetime,
+                    rotation * -spawnDirection);
                 asteroidFacade.AsteroidEntity.CreateSplit(firstSplit.AsteroidEntity);
 
                 _asteroidRegistry.AddEnemy(firstSplit);
                 firstSplit.OnEntityDestroyed += OnAsteroidDestroyed;
 
-                var secondSplit = _asteroidFactory.Create(_settings.AsteroidLifetime, rotation * spawnDirection);
+                var secondSplit = _asteroidFactory.Create(_asteroidSpawnerData.AsteroidLifetime,
+                    rotation * spawnDirection);
                 asteroidFacade.AsteroidEntity.CreateSplit(secondSplit.AsteroidEntity);
 
                 _asteroidRegistry.AddEnemy(secondSplit);
@@ -98,17 +111,6 @@ namespace AsteroidsZenject.AsteroidZenject
         private void OnAsteroidDestroyed()
         {
             _enemyCount--;
-        }
-
-        [Serializable]
-        public class Settings
-        {
-            [field: SerializeField] public float SpawnDistance { get; private set; } = 10;
-            [field: SerializeField] public float DirectionVariance { get; private set; } = 10;
-            [field: SerializeField] public float NumEnemiesIncreaseRate { get; private set; }
-            [field: SerializeField] public float NumEnemiesStartAmount { get; private set; }
-            [field: SerializeField] public float MinDelayBetweenSpawns { get; private set; } = 0.5f;
-            [field: SerializeField] public float AsteroidLifetime { get; private set; } = 2f;
         }
     }
 }

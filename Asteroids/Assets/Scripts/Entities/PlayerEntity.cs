@@ -19,7 +19,6 @@ namespace Entities
         typeof(Rigidbody2D))]
     public class PlayerEntity : ShipEntity
     {
-        [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
         private PlayerInput _playerInput;
@@ -27,16 +26,34 @@ namespace Entities
         
         private bool _moving;
         private float _movementDirection;
+<<<<<<< Updated upstream
+=======
+        private PlayerSettingsSO _playerSettings;
+        public BonusFinder BonusFinder { get; set; }
+>>>>>>> Stashed changes
 
         public override event Action<IAttackApplier> OnDied;
 
         [Inject]
         public void Construct(PlayerInput playerInput,
+<<<<<<< Updated upstream
             Heath heath, CameraShaker cameraShaker)
+=======
+            Heath heath, CameraShaker cameraShaker,
+            BonusHandler bonusHandler,
+            PlayerSettingsSO playerSettingsSo)
+>>>>>>> Stashed changes
         {
             Heath = heath;
             _playerInput = playerInput;
             _cameraShaker = cameraShaker;
+<<<<<<< Updated upstream
+=======
+            BonusHandler = bonusHandler;
+            _playerSettings = playerSettingsSo;
+            BonusFinder = new BonusFinder(bonusHandler);
+            ObjectPicker.Init(bonusHandler);
+>>>>>>> Stashed changes
         }
         
         public override void Die(IAttackApplier attackApplier)
@@ -60,7 +77,26 @@ namespace Entities
         {
             ReadMovement();
             Rotate();
+<<<<<<< Updated upstream
 
+=======
+            MakeAttack();
+        }
+        private void FixedUpdate()
+        {
+            if (_moving)
+            {
+                _rigidbody2D.AddForce(transform.up * _playerSettings.MovementSpeed);
+            }
+
+            if (_movementDirection != 0)
+            {
+                _rigidbody2D.AddTorque(_movementDirection * _playerSettings.RotationSpeed);
+            }
+        }
+        private void MakeAttack()
+        {
+>>>>>>> Stashed changes
             if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
                 ApplyAttack(new HitData

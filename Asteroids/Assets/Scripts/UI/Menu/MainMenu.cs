@@ -14,11 +14,11 @@ namespace UI.Menu
         [SerializeField] private Button _settingButton;
         [SerializeField] private Button _quitButton;
 
-        public override void Init(UIData uiData)
+        public override void Init()
         {
-            base.Init(uiData);
+            base.Init();
          
-            _startButton.onClick.AddListener(StartGame);
+            _startButton.onClick.AddListener(() => this.CallWithDelay(SwitchToDifficulty, .05f));
             _settingButton.onClick.AddListener(() => this.CallWithDelay(SwitchToSettings, .05f));
             _quitButton.onClick.AddListener( () =>
             {
@@ -30,15 +30,17 @@ namespace UI.Menu
             });
         }
 
+        private void SwitchToDifficulty()
+        {
+            MainMenuSwitcher.Show<DifficultyMenu>();
+        }
+
         private void SwitchToSettings()
         {
             MainMenuSwitcher.Show<SettingsMenu>();
         }
 
-        private void StartGame()
-        {
-            LevelLoader.Instance.LoadScene(0);
-        }
+        
     }
 
 }

@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
+=======
+using AsteroidsZenject;
+using AsteroidsZenject.PlayerZenject;
+using BonusesSystem;
+>>>>>>> Stashed changes
 using Entities;
 using StatsSystem;
 using StatsSystem.Core;
@@ -14,6 +20,9 @@ namespace Installers
 
         public override void InstallBindings()
         {
+            var difficultyData = Container.Resolve<DifficultyManager>().DifficultyData;
+            
+            Container.BindInstance(difficultyData.PlayerSettingsSo);
             Container.Bind<Heath>().FromSubContainerResolve().ByMethod(InstallPlayerHealth).AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerEntity>().FromInstance(_playerEntity).AsSingle();
             Container.Bind<PlayerInput>().FromInstance(_playerInput).AsSingle();

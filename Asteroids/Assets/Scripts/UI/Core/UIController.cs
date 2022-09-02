@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using UnityEngine;
+using Zenject;
 
 namespace UI.Core
 {
-    public abstract class UIController : MonoBehaviour
+    public abstract class UIController : MonoBehaviour, IInitializable
     {
-        private UIData _uiData;
         private List<StaticUIElement> _staticUIElements = new List<StaticUIElement>();
         private List<PopupUIElement> _popupUIElements  = new List<PopupUIElement>();
 
@@ -17,16 +17,14 @@ namespace UI.Core
         public event Action OnPopupUIOpened;
         public event Action OnPopupUIHide;
         
-        public virtual void Init(UIData uiData)
+        public void Initialize()
         {
             _staticUIElements = GetComponentsInChildren<StaticUIElement>().ToList();
             _popupUIElements = GetComponentsInChildren<PopupUIElement>().ToList();
             
-            _uiData = uiData;
-            
             foreach (var popupUIElement in _popupUIElements)
             {
-                popupUIElement.Init(_uiData);
+                popupUIElement.Init();
                 popupUIElement.Hide();
                 popupUIElement.OnElementShow += OnPopupShow;
                 popupUIElement.OnElementHide += OnPopupHide;
@@ -34,7 +32,7 @@ namespace UI.Core
 
             foreach (var staticUIElement in _staticUIElements)
             {
-                staticUIElement.Init(_uiData);
+                staticUIElement.Init();
             }
         }
 
@@ -90,5 +88,7 @@ namespace UI.Core
                 popupUIElement.OnElementHide -= OnPopupHide;
             }
         }
+
+        
     }
 }

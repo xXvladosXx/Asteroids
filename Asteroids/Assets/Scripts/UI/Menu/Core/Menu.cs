@@ -7,9 +7,7 @@ namespace UI.Menu.Core
     {
         protected string SaveFile = " ";
         
-        public virtual void Init(UIData uiData)
-        {
-        }
+        public virtual void Init() { }
         public virtual void HideMenu() => gameObject.SetActive(false);
         public virtual void ShowMenu() => gameObject.SetActive(true);
     }

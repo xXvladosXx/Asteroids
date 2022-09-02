@@ -1,4 +1,5 @@
 using System;
+using Data.EnemyShip;
 using Entities;
 using Spawners.Core;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace AsteroidsZenject.EnemyShipZenject
 
         private EnemyShipFacade.Factory _enemyShipFactory;
         private SignalBus _signalBus;
-        private Settings _settings;
+        private EnemyShipSpawnerData _enemyShipSpawnerData;
 
         private float _desiredNumEnemies;
         private int _enemyCount;
@@ -23,12 +24,12 @@ namespace AsteroidsZenject.EnemyShipZenject
         public EnemyShipSpawner(EnemyShipRegistry enemyShipRegistry,
             EnemyShipFacade.Factory enemyShipFactory, 
             PlayerEntity playerEntity,
-            Settings settings) 
+            EnemyShipSpawnerData enemyShipSpawnerData) 
         {
             _enemyShipFactory = enemyShipFactory;
             _enemyShipRegistry = enemyShipRegistry;
             _playerEntity = playerEntity;
-            _settings = settings;
+            _enemyShipSpawnerData = enemyShipSpawnerData;
         }
         
         public void Initialize()
@@ -42,10 +43,10 @@ namespace AsteroidsZenject.EnemyShipZenject
                 Spawn();
             }
             
-            _desiredNumEnemies += _settings.NumEnemiesIncreaseRate * Time.deltaTime;
+            _desiredNumEnemies += _enemyShipSpawnerData.NumEnemiesIncreaseRate * Time.deltaTime;
 
             if (_enemyCount < (int) _desiredNumEnemies
-                && Time.realtimeSinceStartup - _lastSpawnTime > _settings.MinDelayBetweenSpawns)
+                && Time.realtimeSinceStartup - _lastSpawnTime > _enemyShipSpawnerData.MinDelayBetweenSpawns)
             {
                 Spawn();
                 _enemyCount++;
@@ -54,14 +55,18 @@ namespace AsteroidsZenject.EnemyShipZenject
         
         public override void Spawn()
         {
-            int pointToSpawn = Random.Range(0, _settings.PointsToSpawn.Length);
+            int pointToSpawn = Random.Range(0, _enemyShipSpawnerData.PointsToSpawn.Length);
 
+<<<<<<< Updated upstream
             Vector3 position = Vector3.zero;
             
             if (_settings.PointsToSpawn[pointToSpawn] != null)
             {
                 position = _settings.PointsToSpawn[pointToSpawn].position;
             }
+=======
+            Vector3 position = _enemyShipSpawnerData.PointsToSpawn[pointToSpawn];
+>>>>>>> Stashed changes
             
             var enemy = _enemyShipFactory.Create(position);
             enemy.Construct(_playerEntity);
@@ -75,6 +80,7 @@ namespace AsteroidsZenject.EnemyShipZenject
         public void Dispose()
         {
         }
+<<<<<<< Updated upstream
 
         [Serializable]
         public class Settings
@@ -84,5 +90,7 @@ namespace AsteroidsZenject.EnemyShipZenject
             [field: SerializeField] public float NumEnemiesStartAmount { get; private set; }
             [field: SerializeField] public float MinDelayBetweenSpawns { get; private set; } = 5f;
         }
+=======
+>>>>>>> Stashed changes
     }
 }

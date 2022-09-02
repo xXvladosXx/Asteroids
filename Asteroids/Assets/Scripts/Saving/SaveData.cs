@@ -9,5 +9,6 @@ namespace Saving
         public float EffectsVolume { get; set; }
         public float MusicVolume { get; set; }
         public bool Fullscreen { get; set; }
+        public int Language { get; set; }
     }
 }

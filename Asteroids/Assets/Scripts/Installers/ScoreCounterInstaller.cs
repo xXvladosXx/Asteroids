@@ -15,7 +15,7 @@ namespace Installers
         {
             Container.Bind<ScoreCounter>().FromInstance(_scoreCounter).AsSingle();
             Container.Bind<ScoreCounterUI>().FromInstance(_scoreCounterUI).AsSingle();
-            Container.BindInterfacesAndSelfTo<ScoreCounterController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerScoreCounterController>().AsSingle();
         }
     }
 }

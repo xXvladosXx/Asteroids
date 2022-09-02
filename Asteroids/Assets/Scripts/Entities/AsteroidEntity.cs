@@ -1,8 +1,11 @@
+using System;
+using AsteroidsZenject;
 using AudioSystem;
 using Combat.Core;
 using Data.Asteroid;
 using Entities.Core;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Entities
@@ -11,12 +14,19 @@ namespace Entities
         typeof(SpriteRenderer))]
     public class AsteroidEntity : Entity
     {
-        [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
         [field: SerializeField] public float Size { get; set; }
         
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        
+        public AsteroidData AsteroidData { get; private set; }
 
+        [Inject]
+        public void Construct(AsteroidData asteroidData)
+        {
+            AsteroidData = asteroidData;
+        }
+        
         public override void Die(IAttackApplier attackApplier)
         {
         }
@@ -36,6 +46,7 @@ namespace Entities
         {
             _rigidbody.AddForce(direction * RandomizeSpeed());
         }
+        
         public void RandomizeSize()
         {
             var randomSize = Random.Range(AsteroidData.MinSize, AsteroidData.MaxSize);
@@ -44,8 +55,8 @@ namespace Entities
 
             _rigidbody.mass = randomSize;
         }
-        
-        public void CreateSplit(AsteroidEntity asteroidEntity)
+
+        public void CreateSplit( AsteroidEntity asteroidEntity)
         {
             Vector2 position = transform.position;
             position += Random.insideUnitCircle * .5f;
@@ -64,5 +75,6 @@ namespace Entities
             return possibleSpeed;
         }
 
+       
     }
 }

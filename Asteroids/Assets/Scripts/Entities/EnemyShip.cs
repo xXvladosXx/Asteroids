@@ -5,6 +5,7 @@ using Entities.Core;
 using StateMachine.Enemy.OrdinaryShip;
 using UI.Enemy;
 using UnityEngine;
+using Zenject;
 
 namespace Entities
 {
@@ -14,12 +15,18 @@ namespace Entities
         [field: SerializeField] public EnemyTriggerColliderSettings EnemyTriggerColliderSettings { get; private set; }
         [field: SerializeField] public LayerMasks LayerMasks { get; private set; }
         [field: SerializeField] public HealthBar HealthBar { get; private set; }
-        [field: SerializeField] public EnemyShipData EnemyShipData { get; private set; }
 
+        public EnemyShipData EnemyShipData { get; private set; }
         public Transform Target { get; set; }
         
         private EnemyShipStateMachine _enemyShipStateMachine;
         public override event Action<IAttackApplier> OnDied;
+        
+        [Inject]
+        public void Construct(EnemyShipData enemyShipData)
+        {
+            EnemyShipData = enemyShipData;
+        }
 
         public override void Construct()
         {
@@ -40,6 +47,7 @@ namespace Entities
         protected override void OnAwake()
         {
             _enemyShipStateMachine = new EnemyShipStateMachine(this);
+
             EnemyTriggerColliderSettings.Initialize();
         }
 
