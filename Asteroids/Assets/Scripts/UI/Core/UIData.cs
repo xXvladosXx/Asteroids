@@ -11,6 +11,5 @@ namespace UI.Core
         public PlayerEntity Player { get; set; }
         public ScoreCounter ScoreCounter { get; set; }
         public GameContext GameContext { get; set; }
-        public SaveSystem SaveSystem { get; set; }
     }
 }

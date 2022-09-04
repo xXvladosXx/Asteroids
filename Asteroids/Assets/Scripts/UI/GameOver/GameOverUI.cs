@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UI.Core;
 using UI.Fader;
 using UnityEngine;
@@ -10,13 +11,12 @@ namespace UI.GameOver
     public sealed class GameOverUI : PopupUIElement
     {
         [SerializeField] private Button _button;
+        [SerializeField] private TextMeshProUGUI _score;
+        [SerializeField] private FaderUI _fader;
 
-        private FaderUI _fader;
-        public override void Init(UIData uiData)
+        public event Action OnTryAgainRequest;
+        public void Init()
         {
-            base.Init(uiData);
-            
-            _fader = GetComponent<FaderUI>();
             _fader.OnFadeCompleted += ActivateButton;
             
             _button.gameObject.SetActive(false);
@@ -35,9 +35,14 @@ namespace UI.GameOver
             _fader.Fader();
         }
 
+        public void ChangeScore(string result)
+        {
+            _score.text = result;
+        }
+
         private void TryAgain()
         {
-            UIData.GameContext.ReloadLevel();
+            OnTryAgainRequest?.Invoke();
         }
 
         private void OnDisable()

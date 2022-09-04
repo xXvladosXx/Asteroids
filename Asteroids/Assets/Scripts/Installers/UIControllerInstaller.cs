@@ -10,7 +10,7 @@ namespace Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<UIController>().FromInstance(_uiController).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIController>().FromInstance(_uiController).AsSingle();
         }
     }
 }

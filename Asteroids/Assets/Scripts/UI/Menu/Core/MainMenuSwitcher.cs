@@ -17,15 +17,15 @@ namespace UI.Menu.Core
         
         private readonly Stack<Menu> _history = new Stack<Menu>();
 
-        public override void Init(UIData uiData)
+        public override void Init()
         {
-            base.Init(uiData);
+            base.Init();
             
             _instance = this;
             
             foreach (var menu in _menus)
             {
-                menu.Init(uiData);
+                menu.Init();
                 menu.HideMenu();
             }
             

@@ -9,29 +9,9 @@ namespace UI.UIControllers
 {
     public class GameplayUIController : UIController
     {
-        private PlayerEntity _player;
-
-        [Inject]
-        public void Construct(PlayerEntity playerEntity)
-        {
-            _player = playerEntity;
-        }
-        
-        public override void Init(UIData uiData)
-        {
-            base.Init(uiData);
-
-            _player.OnDied += ChangeGameOverScreen;
-        }
-
-        private void ChangeGameOverScreen(IAttackApplier attackApplier)
+        public void ChangeGameOverScreen(IAttackApplier attackApplier)
         {
             SwitchUIElement<GameOverUI>();
-        }
-
-        protected override void OnDisable()
-        {
-            _player.OnDied -= ChangeGameOverScreen;
         }
     }
 }

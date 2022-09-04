@@ -18,38 +18,27 @@ namespace UI.Menu
     {
         [SerializeField] private Button _backButton;
         [SerializeField] private Toggle _fullScreen;
+        [SerializeField] private Button _languages;
 
         [SerializeField] private Slider _musicSlider;
         [SerializeField] private Slider _effectsSlider;
 
         private int _screenInt;
 
-        private SaveSystem _saveSystem;
-        private AudioManager _audioManager;
-
-        [Inject]
-        public void Construct(AudioManager audioManager)
-        {
-            _audioManager = audioManager;
-        }
-        
-        public override void Init(UIData uiData)
-        {
-            base.Init(uiData);
-
-            _saveSystem = uiData.SaveSystem;
-
-            LoadLastSettings();
-        }
+        public event Action<SaveData> OnSaveDataRequest;
+        public event Action<float> OnEffectsVolumeChanged; 
+        public event Action<float> OnMusicVolumeChanged; 
 
         public void SetEffectsVolume(float volume)
         {
-            _audioManager.ChangeEffectsSound(volume);
+            OnEffectsVolumeChanged?.Invoke(volume);
+            //_audioManager.ChangeEffectsSound(volume);
         }
 
         public void SetMusicVolume(float volume)
         {
-            _audioManager.ChangeMusicSound(volume);
+            OnMusicVolumeChanged?.Invoke(volume);
+            //_audioManager.ChangeMusicSound(volume);
         }
 
         public void SaveSettings()
@@ -60,15 +49,21 @@ namespace UI.Menu
                 EffectsVolume = _effectsSlider.value,
             };
 
-            _saveSystem.SaveSettings(settingsSaveData);
+            OnSaveDataRequest?.Invoke(settingsSaveData);
         }
 
         private void OnEnable()
         {
-            _backButton.onClick.AddListener(TryToSwitchMenu);
+            _backButton.onClick.AddListener(SwitchToLast);
+            _languages.onClick.AddListener(SwitchToLanguages);
         }
 
-        private void TryToSwitchMenu()
+        private void SwitchToLanguages()
+        {
+            this.CallWithDelay(() => MainMenuSwitcher.Show<LanguagesMenu>(), 0.05f); 
+        }
+
+        private void SwitchToLast()
         {
             SaveSettings();
             this.CallWithDelay(MainMenuSwitcher.ShowLast, 0.05f); 
@@ -76,12 +71,13 @@ namespace UI.Menu
 
         private void OnDisable()
         {
-            _backButton.onClick.RemoveAllListeners();
+            _backButton.onClick.RemoveListener(SwitchToLast);
+            _languages.onClick.RemoveListener(SwitchToLanguages);
         }
 
-        private void LoadLastSettings()
+        public void LoadLastSettings(SaveData saveData)
         {
-            var settings = _saveSystem.LoadSettings();
+            var settings = saveData;
 
             FindEffectsVolume(settings);
             FindMusicVolume(settings);

@@ -3,6 +3,7 @@ using UI.Core;
 using UI.GameOver;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Core.Games
 {
@@ -11,18 +12,10 @@ namespace Core.Games
         [SerializeField] private UIController _uiController;
 
         private GameContext _gameContext;
-        private SaveSystem _saveSystem;
 
         private void Awake()
         {
-            _gameContext = new GameContext();
-            _saveSystem = new SaveSystem();
             
-            _uiController.Init(new UIData
-            {
-                GameContext = _gameContext,
-                SaveSystem = _saveSystem
-            });
         }
     }
 }

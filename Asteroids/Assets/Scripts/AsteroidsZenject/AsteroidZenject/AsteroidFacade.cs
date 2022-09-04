@@ -48,7 +48,7 @@ namespace AsteroidsZenject.AsteroidZenject
             OnEntityDestroyed?.Invoke(this);  
         }
 
-        public void OnSpawned(float lifeTime, Vector3 direction, IMemoryPool pool)
+        public void OnSpawned(float lifeTime,  Vector3 direction, IMemoryPool pool)
         {
             _pool = pool;
             
@@ -90,7 +90,7 @@ namespace AsteroidsZenject.AsteroidZenject
             }
         }
 
-        public class Factory : PlaceholderFactory<float, Vector3, AsteroidFacade> { }
+        public class Factory : PlaceholderFactory<float,  Vector3, AsteroidFacade> { }
 
     }
 }

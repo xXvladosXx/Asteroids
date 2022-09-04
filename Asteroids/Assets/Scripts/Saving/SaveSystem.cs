@@ -13,6 +13,7 @@ namespace Saving
         private const string EFFECTS_VOLUME = "EffectsVolume";
         private const string MUSIC_VOLUME = "MusicVolume";
         private const string IS_FULLSCREEN = "Fullscreen";
+        private const string LANGUAGE = "Language";
 
         public event Action OnBestScoreChanged;
         
@@ -43,6 +44,11 @@ namespace Saving
 
             return TextFormatter.FormatToTwoDecimalAfterPoint(PlayerPrefs.GetFloat(BEST_SCORE));
         }
+
+        public void SetLanguage(int id)
+        {
+            PlayerPrefs.SetInt(LANGUAGE, id);
+        }
         
         public void SaveSettings(SaveData settingsSaveData)
         {
@@ -58,6 +64,7 @@ namespace Saving
                 EffectsVolume = PlayerPrefs.GetFloat(EFFECTS_VOLUME, 0),
                 MusicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME, 0),
                 Fullscreen = Convert.ToBoolean(PlayerPrefs.GetInt(IS_FULLSCREEN, 0)),
+                Language = PlayerPrefs.GetInt(LANGUAGE, 0),
             };
             
             return settingsSaveData;

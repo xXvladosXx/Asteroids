@@ -7,7 +7,7 @@ namespace UI.Core
         public event Action OnElementHide;
         public event Action<IUIElement> OnElementShow;
 
-        void Init(UIData player);
+        void Init();
         void Hide();
         void Show();
     }
