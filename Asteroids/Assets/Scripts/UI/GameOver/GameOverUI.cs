@@ -37,7 +37,6 @@ namespace UI.GameOver
 
         public void ChangeScore(string result)
         {
-            _score.text = result;
         }
 
         private void TryAgain()

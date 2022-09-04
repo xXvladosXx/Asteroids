@@ -11,7 +11,7 @@ namespace UI.Enemy
 
         private List<EnemyUI> _enemyUis = new List<EnemyUI>();
 
-        public void Init()
+        public override void Init()
         {
             
         }
