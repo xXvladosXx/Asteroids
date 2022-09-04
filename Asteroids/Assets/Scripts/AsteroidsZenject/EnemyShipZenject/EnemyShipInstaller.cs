@@ -1,5 +1,6 @@
 using Controllers;
 using Entities;
+using Interaction;
 using StatsSystem;
 using StatsSystem.Core;
 using UI.Enemy;

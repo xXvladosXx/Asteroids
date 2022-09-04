@@ -28,7 +28,7 @@ namespace Combat.Projectiles.Core
             Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        public virtual void ApplyAttack(HitData hitData)
+        public virtual void ApplyAttack(HitData hitData, ProjectileModifiersData projectileModifiersData)
         {
             _hitData = hitData;
         }

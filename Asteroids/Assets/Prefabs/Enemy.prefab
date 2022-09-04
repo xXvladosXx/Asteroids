@@ -735,7 +735,7 @@ MonoBehaviour:
   <ObjectPicker>k__BackingField:
     <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
     <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
-  attackHandler: {fileID: -1244552943200606898}
+  <AttackHandler>k__BackingField: {fileID: -1244552943200606898}
   <Rigidbody2D>k__BackingField: {fileID: 8075752999369077254}
   <EnemyTriggerColliderSettings>k__BackingField:
     <BoundaryCheckCollider>k__BackingField: {fileID: 7884475230292731088}
@@ -748,11 +748,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 128
   <HealthBar>k__BackingField: {fileID: 215076820}
-  <EnemyShipData>k__BackingField:
-    <AudioClip>k__BackingField: {fileID: 8300000, guid: 15a566bb0355a4443811b66e7f442285, type: 3}
-    <StateSettings>k__BackingField:
-      <MovingStateSettings>k__BackingField: {fileID: 11400000, guid: 540bd65e34823df47809ce5b7cd3feb3, type: 2}
-      <AttackStateSettings>k__BackingField: {fileID: 11400000, guid: ffdf20baf6fb8784e9cd89c9837956d8, type: 2}
 --- !u!114 &7756117854044885002
 MonoBehaviour:
   m_ObjectHideFlags: 0

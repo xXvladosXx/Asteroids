@@ -21,19 +21,26 @@ namespace BonusesSystem
                 if (_cooldownDatas[i].DecrementCooldown(time))
                 {
                     OnTimeableRemoved(_cooldownDatas[i]);
-                    _cooldownDatas.RemoveAt(i);
+                    RemoveFromCooldown(i);
                 }
             }
         }
+
+        
 
         protected virtual void OnTimeableRemoved(CooldownData cooldownData)
         {
             
         }
 
-        public void PutOnCooldown(ITimeable timeable)
+        protected void PutOnCooldown(ITimeable timeable)
         {
             _cooldownDatas.Add(new CooldownData(timeable));
+        }
+        
+        private void RemoveFromCooldown(int i)
+        {
+            _cooldownDatas.RemoveAt(i);
         }
 
         public bool IsOnCooldown(int id) => _cooldownDatas.Any(cooldownData => cooldownData.Id == id);

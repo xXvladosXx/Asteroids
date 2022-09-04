@@ -22,7 +22,7 @@ namespace UI.Enemy
             _heath = heath;
         
             UpdateParams(_heath.MaxValue, _heath.CurrentValue);
-            _heath.OnDamageReceived += UpdateParams;
+            _heath.OnHealthChanged += UpdateParams;
         }
 
         private void Update()

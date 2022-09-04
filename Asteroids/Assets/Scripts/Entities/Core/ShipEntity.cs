@@ -13,8 +13,7 @@ namespace Entities.Core
     public abstract class ShipEntity : Entity, IAttackApplier, IDamageReceiver, IScoreCollector
     {
         [field: SerializeField] public ObjectPicker ObjectPicker { get; private set; }
-
-        [SerializeField] protected AttackHandler attackHandler;
+        [field: SerializeField] public AttackHandler AttackHandler { get; private set; }
         public Transform User => transform;
         public IScoreCollector ScoreCollector => this;
 
@@ -24,7 +23,7 @@ namespace Entities.Core
 
         protected override void Awake()
         {
-            attackHandler.Init(ObjectPicker);
+            AttackHandler.Init(ObjectPicker);
 
             OnAwake();
         }
@@ -35,8 +34,8 @@ namespace Entities.Core
 
         public void ApplyAttack(HitData hitData, IDamageReceiver damageReceiver)
         {
-            if (attackHandler.CanMakeFire())
-                attackHandler.Fire(hitData);
+            if (AttackHandler.CanMakeFire())
+                AttackHandler.Fire(hitData, transform.position);
         }
         
         public virtual void ReceiveDamage(HitData hitData)

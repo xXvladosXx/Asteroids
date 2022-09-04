@@ -57,7 +57,7 @@ namespace BonusesSystem
 
         public void RemoveBonus(TimeableBonus bonusSo)
         {
-            BonusList.Add(bonusSo);
+            BonusList.Remove(bonusSo);
         }
         
         public void Dispose()

@@ -20,12 +20,12 @@ namespace Controllers
         {
             _enemyHealthUI.Init(_enemyShip.Heath.MaxValue, _enemyShip.Heath.CurrentValue);
             
-            _enemyShip.Heath.OnDamageReceived += _enemyHealthUI.UpdateHealth;
+            _enemyShip.Heath.OnHealthChanged += _enemyHealthUI.UpdateHealth;
         }
 
         public void Dispose()
         {
-            _enemyShip.Heath.OnDamageReceived -= _enemyHealthUI.UpdateHealth;
+            _enemyShip.Heath.OnHealthChanged -= _enemyHealthUI.UpdateHealth;
         }
     }
 }

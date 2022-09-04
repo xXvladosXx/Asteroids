@@ -18,7 +18,7 @@ namespace Entities
 {
     [RequireComponent(typeof(PlayerInput),
         typeof(Rigidbody2D))]
-    public class PlayerEntity : ShipEntity
+    public class PlayerEntity : ShipEntity, IBonusUser
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
@@ -68,6 +68,8 @@ namespace Entities
 
         private void Update()
         {
+            Heath.IncreaseHealth(BonusFinder.GetBonus(Stat.HealthRegeneration));
+            
             ReadMovement();
             Rotate();
             MakeAttack();
@@ -90,9 +92,10 @@ namespace Entities
             {
                 ApplyAttack(new HitData
                 {
-                    Damage = StatsData.GetStat(Stats.Damage),
+                    Damage = StatsData.GetStat(Stats.Damage) + BonusFinder.GetBonus(Stat.Damage),
                     Hurtbox = this,
-                    AttackApplier = this
+                    AttackApplier = this,
+                    BonusUser = this
                 }, null);
             }
         }

@@ -21,12 +21,12 @@ namespace Controllers
         {
             _healthUI.Init(_playerEntity.Heath.MaxValue, _playerEntity.Heath.CurrentValue);
             
-            _playerEntity.Heath.OnDamageReceived += _healthUI.UpdateHeartsHUD;
+            _playerEntity.Heath.OnHealthChanged += _healthUI.UpdateHeartsHUD;
         }
 
         public void Dispose()
         {
-            _playerEntity.Heath.OnDamageReceived -= _healthUI.UpdateHeartsHUD;
+            _playerEntity.Heath.OnHealthChanged -= _healthUI.UpdateHeartsHUD;
         }
     }
 }
