@@ -57,17 +57,7 @@ namespace AsteroidsZenject.EnemyShipZenject
         {
             int pointToSpawn = Random.Range(0, _enemyShipSpawnerData.PointsToSpawn.Length);
 
-<<<<<<< Updated upstream
-            Vector3 position = Vector3.zero;
-            
-            if (_settings.PointsToSpawn[pointToSpawn] != null)
-            {
-                position = _settings.PointsToSpawn[pointToSpawn].position;
-            }
-=======
             Vector3 position = _enemyShipSpawnerData.PointsToSpawn[pointToSpawn];
->>>>>>> Stashed changes
-            
             var enemy = _enemyShipFactory.Create(position);
             enemy.Construct(_playerEntity);
 
@@ -80,17 +70,5 @@ namespace AsteroidsZenject.EnemyShipZenject
         public void Dispose()
         {
         }
-<<<<<<< Updated upstream
-
-        [Serializable]
-        public class Settings
-        {
-            [field: SerializeField] public Transform[] PointsToSpawn { get; private set; }
-            [field: SerializeField] public float NumEnemiesIncreaseRate { get; private set; }
-            [field: SerializeField] public float NumEnemiesStartAmount { get; private set; }
-            [field: SerializeField] public float MinDelayBetweenSpawns { get; private set; } = 5f;
-        }
-=======
->>>>>>> Stashed changes
     }
 }

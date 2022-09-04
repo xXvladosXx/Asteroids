@@ -12,6 +12,8 @@ namespace BonusesSystem
     {
         public List<TimeableBonus> BonusList { get; private set; } = new List<TimeableBonus>();
         
+        public event Action OnStatModified;
+
         public IEnumerable<IBonus> FindBonus(Stat[] stats)
         {
             IBonus CharacteristicToBonus(Stat c, float value)
@@ -55,7 +57,7 @@ namespace BonusesSystem
 
         public void RemoveBonus(TimeableBonus bonusSo)
         {
-            BonusList.Remove(bonusSo);
+            BonusList.Add(bonusSo);
         }
         
         public void Dispose()

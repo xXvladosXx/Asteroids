@@ -1,4 +1,5 @@
 using System;
+using BonusesSystem;
 using Camera;
 using Combat;
 using Combat.Core;
@@ -23,37 +24,29 @@ namespace Entities
 
         private PlayerInput _playerInput;
         private CameraShaker _cameraShaker;
-        
+        public BonusHandler BonusHandler { get; set; }
+
         private bool _moving;
         private float _movementDirection;
-<<<<<<< Updated upstream
-=======
         private PlayerSettingsSO _playerSettings;
         public BonusFinder BonusFinder { get; set; }
->>>>>>> Stashed changes
 
         public override event Action<IAttackApplier> OnDied;
 
         [Inject]
         public void Construct(PlayerInput playerInput,
-<<<<<<< Updated upstream
-            Heath heath, CameraShaker cameraShaker)
-=======
             Heath heath, CameraShaker cameraShaker,
             BonusHandler bonusHandler,
             PlayerSettingsSO playerSettingsSo)
->>>>>>> Stashed changes
         {
             Heath = heath;
             _playerInput = playerInput;
             _cameraShaker = cameraShaker;
-<<<<<<< Updated upstream
-=======
             BonusHandler = bonusHandler;
             _playerSettings = playerSettingsSo;
             BonusFinder = new BonusFinder(bonusHandler);
             ObjectPicker.Init(bonusHandler);
->>>>>>> Stashed changes
+
         }
         
         public override void Die(IAttackApplier attackApplier)
@@ -77,9 +70,6 @@ namespace Entities
         {
             ReadMovement();
             Rotate();
-<<<<<<< Updated upstream
-
-=======
             MakeAttack();
         }
         private void FixedUpdate()
@@ -96,7 +86,6 @@ namespace Entities
         }
         private void MakeAttack()
         {
->>>>>>> Stashed changes
             if (_playerInput.InputActions.PlayerActions.Fire.IsPressed())
             {
                 ApplyAttack(new HitData
@@ -128,20 +117,7 @@ namespace Entities
                 _movementDirection = 0;
             }
         }
-
-        private void FixedUpdate()
-        {
-            if (_moving)
-            {
-                _rigidbody2D.AddForce(transform.up * PlayerSettings.MovementSpeed);
-            }
-
-            if (_movementDirection != 0)
-            {
-                _rigidbody2D.AddTorque(_movementDirection * PlayerSettings.RotationSpeed);
-            }
-        }
-
+        
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.transform.TryGetComponent(out PickableObject pickableObject))

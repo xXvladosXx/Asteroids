@@ -1,9 +1,11 @@
 ﻿using System;
+using BonusesSystem;
 using Combat;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
 using Interaction.Weapon;
 using UnityEngine;
+using Zenject;
 using Object = UnityEngine.Object;
 
 namespace Interaction
@@ -13,22 +15,27 @@ namespace Interaction
     {
         [field: SerializeField] public Projectile CurrentProjectile { get; private set; }
         [field: SerializeField] public Projectile DefaultProjectile { get; private set; }
+        
+        private BonusHandler _bonusHandler;
 
-        public void PickupObject(PickableObject pickableObject)
+        public void Init(BonusHandler bonusHandler)
         {
-            switch (pickableObject)
-            {
-                case WeaponObject weaponObject:
-                    ChangeWeapon(weaponObject);
-                    Object.Destroy(weaponObject.gameObject);
-                    break;
-            }
+            _bonusHandler = bonusHandler;
         }
         
-        public void ChangeWeapon(WeaponObject weapon)
+        public void PickupObject(PickableObject pickableObject)
         {
-            Debug.Log("Picked");
-            CurrentProjectile = weapon.Projectile;
+            Debug.Log(_bonusHandler);
+
+            switch (pickableObject.Pickable)
+            {
+                case TimeableBonus timeableBonus:
+                    _bonusHandler.AddBonus(timeableBonus);
+                    Object.Destroy(pickableObject.gameObject);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
-=======
 using AsteroidsZenject;
-using AsteroidsZenject.PlayerZenject;
-using BonusesSystem;
->>>>>>> Stashed changes
 using Entities;
 using StatsSystem;
 using StatsSystem.Core;
