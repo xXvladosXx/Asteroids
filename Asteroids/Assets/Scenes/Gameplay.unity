@@ -1624,9 +1624,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _asteroidEntity: {fileID: 135595536393515953, guid: 83f92b7aed285f24493f01f29ec6a7a3, type: 3}
   _enemyShip: {fileID: 8766433533347891653, guid: 29f43615fa4ac2d418a85d584cc91c8f, type: 3}
-  _objectPicker:
-    <CurrentProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
-    <DefaultProjectile>k__BackingField: {fileID: 7531784640674635508, guid: 82220190ca395634a94b158434a4f7d7, type: 3}
 --- !u!1 &1347029105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,18 +2057,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1927009687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84600c3e2a294f618d8816eae8fa628c, type: 3}
+  m_Script: {fileID: 11500000, guid: 53bacd4a5794459599d09f3bd0866235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <SpawnAmount>k__BackingField: 1
-  <SpawnRate>k__BackingField: 5
+  <SpawnRate>k__BackingField: 6
   _collider2D: {fileID: 1927009689}
   _pickableObjects:
-  - {fileID: 1552024525519859197, guid: 8419bc0cc68dff44bb3f54334278c146, type: 3}
-  - {fileID: 1552024525519859197, guid: 30f621db3e3958d4bb5fd07df068bc4f, type: 3}
   - {fileID: 1552024525519859197, guid: b1ed77a0957e88b43aaca5b2b741dbf3, type: 3}
-  - {fileID: 1552024525519859197, guid: 542644790574fe1459162b40a04247ee, type: 3}
-  _timeToDestroyWeapon: 8
+  - {fileID: 6694044688175416897, guid: 30f621db3e3958d4bb5fd07df068bc4f, type: 3}
+  - {fileID: 384881304740451913, guid: 8419bc0cc68dff44bb3f54334278c146, type: 3}
+  - {fileID: 5206589113749605449, guid: 542644790574fe1459162b40a04247ee, type: 3}
+  _timeToDestroyWeapon: 5
 --- !u!61 &1927009689
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2844,6 +2841,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 41450ee22069bb647aaf09c18a5481bd, type: 2}
     - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
       propertyPath: AttackMaker
+      value: 
+      objectReference: {fileID: 307852636819957216}
+    - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
+      propertyPath: attackHandler
       value: 
       objectReference: {fileID: 307852636819957216}
     - target: {fileID: 307852637447588283, guid: 6d9c3aafe567a624ab98d093d49ed0ff, type: 3}
