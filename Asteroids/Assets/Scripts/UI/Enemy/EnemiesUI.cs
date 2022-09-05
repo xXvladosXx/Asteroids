@@ -11,11 +11,6 @@ namespace UI.Enemy
 
         private List<EnemyUI> _enemyUis = new List<EnemyUI>();
 
-        public override void Init()
-        {
-            
-        }
-
         public int AddNewEnemyUI()
         {
             var enemyUI = Instantiate(_enemyUI, transform);

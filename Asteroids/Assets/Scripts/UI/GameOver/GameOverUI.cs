@@ -15,7 +15,7 @@ namespace UI.GameOver
         [SerializeField] private FaderUI _fader;
 
         public event Action OnTryAgainRequest;
-        public void Init()
+        public override void Init()
         {
             _fader.OnFadeCompleted += ActivateButton;
             
