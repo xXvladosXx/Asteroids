@@ -1,11 +1,7 @@
 ﻿using System;
 using BonusesSystem;
-using Combat;
-using Combat.Projectiles;
 using Combat.Projectiles.Core;
-using Interaction.Weapon;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
 
 namespace Interaction

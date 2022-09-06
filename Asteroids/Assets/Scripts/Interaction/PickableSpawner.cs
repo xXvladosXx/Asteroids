@@ -1,4 +1,3 @@
-using Interaction.Weapon;
 using UnityEngine;
 using Utilities.Extensions;
 

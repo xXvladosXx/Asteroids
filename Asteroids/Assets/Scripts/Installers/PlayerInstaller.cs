@@ -21,7 +21,7 @@ namespace Installers
         {
             var difficultyData = Container.Resolve<DifficultyManager>().DifficultyData;
             
-            Container.BindInstance(difficultyData.PlayerSettingsSo);
+            Container.BindInstance(difficultyData.PlayerSettings);
             Container.Bind<Heath>().FromSubContainerResolve().ByMethod(InstallPlayerHealth).AsSingle();
             Container.Bind<ObjectPicker>().FromSubContainerResolve().ByMethod(InstallPlayer).AsSingle();
             Container.BindInterfacesAndSelfTo<BonusHandler>().FromSubContainerResolve().ByMethod(InstallPlayer).AsSingle();

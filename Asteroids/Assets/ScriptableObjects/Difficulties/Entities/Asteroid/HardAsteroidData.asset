@@ -18,6 +18,6 @@ MonoBehaviour:
   <AudioClip>k__BackingField: {fileID: 8300000, guid: f9517356afb533a41b9e7cb6f155031e, type: 3}
   <MaxSize>k__BackingField: 0.2
   <MinSize>k__BackingField: 1
-  <MinSpeed>k__BackingField: 5
-  <MaxSpeed>k__BackingField: 10
-  <Lifetime>k__BackingField: 20
+  <MinSpeed>k__BackingField: 6
+  <MaxSpeed>k__BackingField: 15
+  <Lifetime>k__BackingField: 12

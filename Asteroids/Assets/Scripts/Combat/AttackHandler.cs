@@ -4,7 +4,6 @@ using BonusesSystem;
 using Combat.Core;
 using Combat.Projectiles;
 using Combat.Projectiles.Core;
-using Combat.Projectiles.Modifiers;
 using Interaction;
 using UnityEngine;
 using Utilities.Extensions;

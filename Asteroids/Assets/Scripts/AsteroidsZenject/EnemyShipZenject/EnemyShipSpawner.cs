@@ -59,7 +59,7 @@ namespace AsteroidsZenject.EnemyShipZenject
 
             Vector3 position = _enemyShipSpawnerData.PointsToSpawn[pointToSpawn];
             var enemy = _enemyShipFactory.Create(position);
-            enemy.Construct(_playerEntity);
+            enemy.Init();
 
             _enemyShipRegistry.AddEnemy(enemy);
             enemy.OnEntityDestroyed += _enemyShipRegistry.RemoveEnemy;

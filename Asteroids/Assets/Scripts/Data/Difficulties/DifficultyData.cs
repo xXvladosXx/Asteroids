@@ -9,7 +9,7 @@ namespace Data.Difficulties
     public class DifficultyData : ScriptableObject
     {
         [field: SerializeField] public AsteroidData AsteroidData { get; private set; }
-        [field: SerializeField] public PlayerSettingsSO PlayerSettingsSo { get; private set; }
+        [field: SerializeField] public PlayerSettings PlayerSettings { get; private set; }
         [field: SerializeField] public EnemyShipData EnemyShipData { get; private set; }
         [field: SerializeField] public AsteroidSpawnerData AsteroidSpawnerData { get; private set; }
         [field: SerializeField] public EnemyShipSpawnerData EnemyShipSpawnerData { get; private set; }

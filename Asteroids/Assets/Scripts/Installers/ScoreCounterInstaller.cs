@@ -1,5 +1,5 @@
 using Controllers;
-using Core;
+using Score;
 using UI.Score;
 using UnityEngine;
 using Zenject;

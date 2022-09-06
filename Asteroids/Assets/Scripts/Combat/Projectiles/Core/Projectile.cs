@@ -1,7 +1,5 @@
 using System;
 using Combat.Core;
-using Combat.Projectiles.Modifiers;
-using Core;
 using Data.Projectile;
 using Entities;
 using UnityEngine;
@@ -14,8 +12,6 @@ namespace Combat.Projectiles.Core
     public abstract class Projectile : MonoBehaviour
     {
         [field: SerializeField] public ProjectileData ProjectileData { get; private set; }
-        [field: SerializeField] public ProjectileModifier[] ProjectileModifiersOnStart { get; private set; }
-        [field: SerializeField] public ProjectileModifier[] ProjectileModifiersOnDestroy { get; private set; }
         
         protected Rigidbody2D Rigidbody2D;
         private HitData _hitData;

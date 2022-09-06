@@ -11,34 +11,36 @@ namespace UI.Enemy
 
         private List<EnemyUI> _enemyUis = new List<EnemyUI>();
 
-        public int AddNewEnemyUI()
+        public EnemyUI AddNewEnemyUI()
         {
             var enemyUI = Instantiate(_enemyUI, transform);
             enemyUI.Refresh(new EnemyData(0));
             
             _enemyUis.Add(enemyUI);
             
-            return enemyUI.GetInstanceID();
+            return enemyUI;
         }
 
-        public void RefreshData(int value, EnemyData enemyData)
+        public void RefreshData(EnemyUI value, EnemyData enemyData)
         {
             foreach (var enemyUi in _enemyUis)
             {
-                if(enemyUi.GetInstanceID() == value)
+                if(enemyUi == value)
                     enemyUi.Refresh(enemyData);
             }
         }
 
-        public void RemoveEnemyUI(int id)
+        public void RemoveEnemyUI(EnemyUI id)
         {
             foreach (var enemyUi in _enemyUis)
             {
-                if (enemyUi.GetInstanceID() == id)
+                if (enemyUi == id)
                 {
                     Destroy(enemyUi.gameObject);
                 }
             }
+
+            _enemyUis.Remove(id);
         }
     }
 

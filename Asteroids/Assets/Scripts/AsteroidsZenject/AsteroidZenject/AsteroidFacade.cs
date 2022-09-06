@@ -1,8 +1,8 @@
 using System;
 using Combat.Core;
-using Core;
 using Entities;
 using Entities.Core;
+using Score;
 using StatsSystem.Core;
 using UnityEngine;
 using Utilities.Extensions;

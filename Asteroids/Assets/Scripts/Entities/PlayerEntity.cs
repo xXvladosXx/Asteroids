@@ -3,11 +3,9 @@ using BonusesSystem;
 using Camera;
 using Combat;
 using Combat.Core;
-using Core;
 using Data.Player;
 using Entities.Core;
 using Interaction;
-using Interaction.Weapon;
 using StatsSystem;
 using StatsSystem.Core;
 using UnityEngine;
@@ -28,7 +26,7 @@ namespace Entities
 
         private bool _moving;
         private float _movementDirection;
-        private PlayerSettingsSO _playerSettings;
+        private PlayerSettings _playerSettings;
         public BonusFinder BonusFinder { get; set; }
 
         public override event Action<IAttackApplier> OnDied;
@@ -37,16 +35,16 @@ namespace Entities
         public void Construct(PlayerInput playerInput,
             Heath heath, CameraShaker cameraShaker,
             BonusHandler bonusHandler,
-            PlayerSettingsSO playerSettingsSo)
+            PlayerSettings playerSettings)
         {
             Heath = heath;
             _playerInput = playerInput;
             _cameraShaker = cameraShaker;
             BonusHandler = bonusHandler;
-            _playerSettings = playerSettingsSo;
+            _playerSettings = playerSettings;
+            
             BonusFinder = new BonusFinder(bonusHandler);
             ObjectPicker.Init(bonusHandler);
-
         }
         
         public override void Die(IAttackApplier attackApplier)

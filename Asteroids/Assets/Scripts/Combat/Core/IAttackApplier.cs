@@ -1,4 +1,4 @@
-using Core;
+using Score;
 using UnityEngine;
 
 namespace Combat.Core

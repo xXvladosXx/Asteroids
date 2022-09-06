@@ -1,4 +1,4 @@
-namespace Core
+namespace Score
 {
     public interface IScoreCollector
     {

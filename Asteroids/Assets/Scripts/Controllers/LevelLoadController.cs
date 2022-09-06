@@ -12,6 +12,7 @@ namespace Controllers
         private readonly DifficultyMenu _difficultyMenu;
         private readonly DifficultyManager _difficultyManager;
 
+        private const int START_LEVEL_INDEX = 1;
         public LevelLoadController(LevelLoader levelLoader,
             DifficultyMenu difficultyMenu,
             DifficultyManager difficultyManager)
@@ -30,7 +31,7 @@ namespace Controllers
         {
             _difficultyManager.ChangeDifficulty(difficultyLevel);
 
-            _levelLoader.LoadScene(0);
+            _levelLoader.LoadScene(START_LEVEL_INDEX);
         }
 
         public void Dispose()

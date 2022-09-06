@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Installers
 {
-    public class HealthControllerInstaller : MonoInstaller
+    public class PlayerHealthControllerInstaller : MonoInstaller
     {
         [SerializeField] private HealthUI _healthUI;
 

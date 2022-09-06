@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using AsteroidsZenject.EnemyShipZenject;
 using Combat.Core;
-using Core;
 using Entities;
+using Score;
 using UI.Enemy;
 using UnityEngine;
 using Zenject;
@@ -16,7 +16,7 @@ namespace Controllers
         private readonly EnemiesUI _enemiesUI;
         private readonly ScoreCounter _scoreCounter;
         
-        private Dictionary<EnemyShip, int> _enemyUis = new Dictionary<EnemyShip, int>();
+        private Dictionary<EnemyShip, EnemyUI> _enemyUis = new Dictionary<EnemyShip, EnemyUI>();
 
         public EnemiesController(EnemiesUI enemiesUI, EnemyShipRegistry enemyShipRegistry,
             ScoreCounter scoreCounter)

@@ -22,8 +22,6 @@ namespace UI.Stats
         
         public void UpdateHealth(float maxValue, float currentValue)
         {
-            print("HealthUpdated");
-            
             _slider.gameObject.SetActive(currentValue < maxValue);
             _slider.value = currentValue;
             _slider.maxValue = maxValue;

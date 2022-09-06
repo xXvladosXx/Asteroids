@@ -9,7 +9,7 @@ namespace BonusesSystem
     {
         private readonly List<IModifier> _modifiers;
 
-        public BonusFinder(BonusHandler bonusHandler)
+        public BonusFinder(IModifier bonusHandler)
         {
             _modifiers = new List<IModifier> {bonusHandler};
         }

@@ -1,11 +1,10 @@
 ﻿using System;
-using Combat.Core;
 using Data.Score;
 using Entities;
 using Entities.Core;
 using UnityEngine;
 
-namespace Core
+namespace Score
 {
     [Serializable]
     public sealed class ScoreCounter

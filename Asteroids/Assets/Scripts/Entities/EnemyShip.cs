@@ -28,9 +28,9 @@ namespace Entities
             EnemyShipData = enemyShipData;
         }
 
-        public override void Construct()
+        public override void Init()
         {
-            base.Construct();
+            base.Init();
             
             HealthBar.Init(Heath);
             

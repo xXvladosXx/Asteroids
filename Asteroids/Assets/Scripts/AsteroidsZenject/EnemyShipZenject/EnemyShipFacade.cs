@@ -17,18 +17,18 @@ namespace AsteroidsZenject.EnemyShipZenject
         public event Action<EnemyShipFacade> OnEntityDestroyed;
 
         [Inject]
-        public void Construct(EnemyShip enemyShip)
-        {
-            EnemyShip = enemyShip;
-        }
-
-        public void Construct(PlayerEntity playerEntity)
+        public void Construct(EnemyShip enemyShip,
+            PlayerEntity playerEntity)
         {
             PlayerEntity = playerEntity;
 
-            EnemyShip.Target = PlayerEntity.transform;
+            EnemyShip = enemyShip;
+        }
 
-            EnemyShip.Construct();
+        public void Init()
+        {
+            EnemyShip.Target = PlayerEntity.transform;
+            EnemyShip.Init();
         }
 
         public void OnDespawned()

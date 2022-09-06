@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MediumDifficulty
   m_EditorClassIdentifier: 
   <AsteroidData>k__BackingField: {fileID: 11400000, guid: 58b03ef2a2448b742836fd9834561e77, type: 2}
-  <PlayerSettingsSo>k__BackingField: {fileID: 11400000, guid: 863ecb96f2a0dc140ad9e03e6b1fec89, type: 2}
+  <PlayerSettings>k__BackingField: {fileID: 11400000, guid: 863ecb96f2a0dc140ad9e03e6b1fec89, type: 2}
   <EnemyShipData>k__BackingField: {fileID: 11400000, guid: 879696c62b0fe3840b65fb9ef86da9aa, type: 2}
   <AsteroidSpawnerData>k__BackingField: {fileID: 11400000, guid: 904f81c6dcdc7fc4dab9eaecd35b1e53, type: 2}
   <EnemyShipSpawnerData>k__BackingField: {fileID: 11400000, guid: 2c846af57a15f7b44852f0eebf44c868, type: 2}

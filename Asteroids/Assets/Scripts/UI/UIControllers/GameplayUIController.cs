@@ -9,9 +9,5 @@ namespace UI.UIControllers
 {
     public class GameplayUIController : UIController
     {
-        public void ChangeGameOverScreen(IAttackApplier attackApplier)
-        {
-            SwitchUIElement<GameOverUI>();
-        }
     }
 }

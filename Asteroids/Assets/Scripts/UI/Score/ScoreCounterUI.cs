@@ -1,6 +1,5 @@
 ﻿using System;
 using Combat.Core;
-using Core;
 using TMPro;
 using UI.Core;
 using UnityEngine;
